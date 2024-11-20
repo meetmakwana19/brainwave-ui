@@ -1,11 +1,18 @@
 import "./App.css";
+import "@contentstack/venus-components/build/main.css";
+import Layout from "./Layout";
+import { IMicroAppsObj } from "./types/microAppObj";
 
-function App() {
+interface IApp {
+  microAppsObj: IMicroAppsObj;
+}
+
+const App: React.FC<IApp> = (props) => {
   return (
     <>
-      <h1>Brainwave</h1>
+      <Layout microAppsObj={props.microAppsObj} />
     </>
   );
-}
+};
 
 export default App;
