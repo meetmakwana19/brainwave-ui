@@ -41,7 +41,6 @@ const Home: React.FC<IHomeProps> = (props) => {
   const path = props.microAppsObj.relativeUrl;
   const { navigationID } = useParams<RouteParams>();
   const history = useHistory();
-  console.log("getting navigationID", navigationID);
 
   const navigationDataArray: INavigationData[] = [
     {
@@ -51,31 +50,37 @@ const Home: React.FC<IHomeProps> = (props) => {
         actions: [
           {
             label: (
-              <div className="create-new-wave">
+              <>
                 <Button
                   version="v2"
                   type="primary"
                   icon="v2-Plus"
                   size="large"
-                  classname=""
+                  className="create-new-wave"
+                  onClick={() => history.push(`${path}/create-new-wave`)}
                 >
                   Create New Wave
                 </Button>
-              </div>
+              </>
             ),
             onClick: () => {},
-            type: "button",
+            type: "primary",
           },
           {
             label: (
               <>
-                <Button version="v2" type="primary" size="large">
+                <Button
+                  version="v2"
+                  type="primary"
+                  size="large"
+                  onClick={() => alert("Template")}
+                >
                   Template
                 </Button>
               </>
             ),
             onClick: () => {},
-            type: "button",
+            type: "primary",
           },
         ],
         title: (
