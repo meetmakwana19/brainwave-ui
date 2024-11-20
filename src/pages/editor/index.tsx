@@ -6,8 +6,12 @@ import {
   Truncate,
 } from "@contentstack/venus-components";
 import React from "react";
+import "./index.css";
+import { useHistory } from "react-router-dom";
 
 const Editor: React.FC = () => {
+  const history = useHistory();
+
   const header = {
     component: (
       <PageHeader
@@ -22,6 +26,7 @@ const Editor: React.FC = () => {
         }}
       />
     ),
+    backNavigation: () => history.goBack(),
   };
 
   const content = {
@@ -34,7 +39,7 @@ const Editor: React.FC = () => {
 
   const pageFooter = {
     component: (
-      <div>
+      <div className="editor-footer">
         <ButtonGroup>
           <Button version="v2" buttonType="tertiary" icon="v2-Lock">
             Share
@@ -48,7 +53,7 @@ const Editor: React.FC = () => {
   };
 
   return (
-    <>
+    <div className="editor-page-layout">
       <PageLayout
         type="edit"
         header={header}
@@ -56,7 +61,7 @@ const Editor: React.FC = () => {
         // rightSidebar={rightNav}
         footer={pageFooter}
       />{" "}
-    </>
+    </div>
   );
 };
 

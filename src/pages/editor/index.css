@@ -1,0 +1,12 @@
+.editor-footer {
+  display: flex;
+  justify-content: end;
+}
+
+.editor-page-layout .PageHeader {
+  margin-top: 0.5rem;
+}
+
+.editor-page-layout .PageTitleWrapper {
+  margin-left: 0.75rem;
+}
