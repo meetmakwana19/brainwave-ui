@@ -1,16 +1,22 @@
-import { Icon, LeftNavigation, Tooltip } from "@contentstack/venus-components";
+import {
+  Button,
+  Icon,
+  LeftNavigation,
+  Tooltip,
+} from "@contentstack/venus-components";
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
 import RecentlyModified from "./RecentlyModified";
 import { IMicroAppsObj } from "../../types/microAppObj";
 import SharedWithMe from "./SharedWithMe";
+import "./Home.css";
 
 interface IHomeProps {
   microAppsObj: IMicroAppsObj;
 }
 interface HeaderDataProps {
   title: string | React.ReactNode;
-  actions: [];
+  actions: { label: React.ReactNode; onClick: () => void; type: string }[];
   pageHeaderContent?: string | React.ReactNode;
 }
 
@@ -42,7 +48,36 @@ const Home: React.FC<IHomeProps> = (props) => {
       component: <RecentlyModified />,
       default: navigationID === "recently-modified",
       headerData: {
-        actions: [],
+        actions: [
+          {
+            label: (
+              <div className="create-new-wave">
+                <Button
+                  version="v2"
+                  type="primary"
+                  icon="v2-Plus"
+                  size="large"
+                  classname=""
+                >
+                  Create New Wave
+                </Button>
+              </div>
+            ),
+            onClick: () => {},
+            type: "button",
+          },
+          {
+            label: (
+              <>
+                <Button version="v2" type="primary" size="large">
+                  Template
+                </Button>
+              </>
+            ),
+            onClick: () => {},
+            type: "button",
+          },
+        ],
         title: (
           <>
             <Tooltip
@@ -77,8 +112,7 @@ const Home: React.FC<IHomeProps> = (props) => {
               variantType="basic"
               content={"Learn More About Collaborator Settings"}
               testId={"entries_page_header_learn_more"}
-            >
-            </Tooltip>
+            ></Tooltip>
           </>
         ),
       },
@@ -101,6 +135,7 @@ const Home: React.FC<IHomeProps> = (props) => {
       <LeftNavigation
         version="v2"
         leftNavVersion="v2"
+        // @ts-expect-error due to incompatible label type in actions
         navigationProps={leftNavigationProps}
       />
     </>
