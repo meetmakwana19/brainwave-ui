@@ -1,0 +1,22 @@
+/* .profile-name {
+    width: 100%;
+  }
+  .profile-description {
+    width: 100%;
+  } */
+
+.brain-wave-recently-modified .Table {
+    height: calc(100vh - 12.25rem) !important;
+    min-height: unset !important;
+    .Table__body {
+      height: calc(100vh - 12.25rem) !important;
+    }
+  }
+  
+  .brain-wave-recently-modified .Table.TableWithPaginated {
+    height: calc(100vh - 15.8rem) !important;
+    min-height: unset !important;
+    .Table__body {
+      height: calc(100vh - 15.8rem) !important;
+    }
+  }

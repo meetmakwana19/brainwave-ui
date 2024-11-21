@@ -6,7 +6,7 @@ import {
 } from "@contentstack/venus-components";
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
-import RecentlyModified from "./RecentlyModified";
+import RecentlyModifiedTable from "./RecentlyModifiedTable/RecentlyModifiedTable";
 import { IMicroAppsObj } from "../../types/microAppObj";
 import SharedWithMe from "./SharedWithMe";
 import "./Home.css";
@@ -44,7 +44,7 @@ const Home: React.FC<IHomeProps> = (props) => {
 
   const navigationDataArray: INavigationData[] = [
     {
-      component: <RecentlyModified />,
+      component: <RecentlyModifiedTable microAppsObj={props.microAppsObj} />,
       default: navigationID === "recently-modified",
       headerData: {
         actions: [
