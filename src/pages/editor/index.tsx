@@ -8,8 +8,9 @@ import {
 import React from "react";
 import "./index.css";
 import { useHistory } from "react-router-dom";
+import Editor from "./Editor";
 
-const Editor: React.FC = () => {
+const EditorPage: React.FC = () => {
   const history = useHistory();
 
   const header = {
@@ -32,7 +33,7 @@ const Editor: React.FC = () => {
   const content = {
     component: (
       <div>
-        <h1>Editor</h1>
+        <Editor />
       </div>
     ),
   };
@@ -65,4 +66,4 @@ const Editor: React.FC = () => {
   );
 };
 
-export default Editor;
+export default EditorPage;
