@@ -86,7 +86,7 @@
   }
   
   .delete-button:hover {
-    background-color: #f306064b; /* Slightly lighter purple on hover */
+    background-color: #f306061e; /* Slightly lighter purple on hover */
     svg{
         path{
             fill: #e42222;
@@ -101,7 +101,7 @@
   }
   
   .share-button:hover {
-    background-color: #4ba6502b; /* Slightly lighter green on hover */
+    background-color: #5bee6318; /* Slightly lighter green on hover */
     svg{
         path{
             fill: #00bf0a;
