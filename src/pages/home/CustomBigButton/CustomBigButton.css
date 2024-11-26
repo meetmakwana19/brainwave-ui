@@ -1,4 +1,5 @@
 .custom-button {
+  width: 14rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -23,6 +24,10 @@
   
   .custom-button:active {
     transform: scale(0.95); /* Click effect */
+  }
+
+  .custom-button.inactive {
+    cursor: not-allowed; /* Disable pointer events */
   }
   
   .custom-button.active {

@@ -11,7 +11,7 @@ interface CustomButtonProps {
 const CustomButton:React.FC<CustomButtonProps> = ({ label, icon, onClick, isActive }) => {
   return (
     <div
-      className={`custom-button ${isActive ? "active" : ""}`}
+      className={`custom-button ${isActive ? "active" : "inactive"}`}
       onClick={isActive ? onClick : undefined}
     >
       {icon && <div className="button-icon">{icon}</div>}
