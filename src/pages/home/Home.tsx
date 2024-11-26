@@ -1,15 +1,16 @@
 import {
-  Button,
   Icon,
   LeftNavigation,
   Tooltip,
 } from "@contentstack/venus-components";
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
-import RecentlyModifiedTable from "./RecentlyModifiedTable/RecentlyModifiedTable";
 import { IMicroAppsObj } from "../../types/microAppObj";
 import SharedWithMe from "./SharedWithMe";
 import "./Home.css";
+import DynamicTable from "./SexyDynamicTable/DynamicTable";
+import CustomBigButton from "./CustomBigButton/CustomBigButton";
+import { demoResponse } from "../../common/utils/DemoResponse"
 
 interface IHomeProps {
   microAppsObj: IMicroAppsObj;
@@ -42,57 +43,57 @@ const Home: React.FC<IHomeProps> = (props) => {
   const { navigationID } = useParams<RouteParams>();
   const history = useHistory();
 
+  const response = demoResponse
+
+  // Function to handle row click
+  const handleRowClick = () => {
+    history.push(`${path}/create-new-wave`)
+    // You can perform any action here, such as navigating or showing details
+    console.log('Row data:');
+  };
+
+  const handleButtonClick = (buttonName: string) => {
+    console.log(`Button clicked: ${buttonName}`);
+    alert(`Button clicked: ${buttonName}`);
+  }
+  const handleNewDocumentButtonClick = () => {
+    history.push(`${path}/create-new-wave`)
+  }
+
   const navigationDataArray: INavigationData[] = [
     {
-      component: <RecentlyModifiedTable microAppsObj={props.microAppsObj} />,
+      component: <DynamicTable data={response} onRowClick={handleRowClick} />,
       default: navigationID === "recently-modified",
       headerData: {
         actions: [
-          {
-            label: (
-              <>
-                <Button
-                  version="v2"
-                  type="primary"
-                  icon="v2-Plus"
-                  size="large"
-                  className="create-new-wave"
-                  onClick={() => history.push(`${path}/create-new-wave`)}
-                >
-                  Create New Wave
-                </Button>
-              </>
-            ),
-            onClick: () => {},
-            type: "primary",
-          },
-          {
-            label: (
-              <>
-                <Button
-                  version="v2"
-                  type="primary"
-                  size="large"
-                  onClick={() => alert("Template")}
-                >
-                  Template
-                </Button>
-              </>
-            ),
-            onClick: () => {},
-            type: "primary",
-          },
+
         ],
         title: (
-          <>
-            <Tooltip
-              position="right"
-              interactive={false}
-              variantType="basic"
-              content={"Learn More About Brainwave"}
-              testId={"entries_page_header_learn_more"}
-            ></Tooltip>
-          </>
+          <div className="brain-wave-table-header-wrapper">
+            <div className="heading-for-table-text">Recent</div>
+            <div style={{ display: "flex", gap: "16px", marginBottom: "16px" }}>
+              <CustomBigButton
+                label="New Document"
+                icon={<Icon icon="NewTab" version="v2" size="small" />}
+                onClick={() => handleNewDocumentButtonClick()}
+                isActive={true} /* Set to true if active */
+              />
+              <CustomBigButton
+                label="Templates"
+                icon={<Icon icon="Layout" version="v2" size="small" />}
+                onClick={() => handleButtonClick("Templates")}
+                isActive={true} /* Set to true if active */
+
+              />
+              <CustomBigButton
+                label="Import"
+                icon={<Icon icon="Download" version="v2" size="small" />}
+                onClick={() => handleButtonClick("Import")}
+                isActive={false} /* Set to true if active */
+
+              />
+            </div>
+          </div>
         ),
       },
       onclick: () => {
@@ -136,14 +137,14 @@ const Home: React.FC<IHomeProps> = (props) => {
   };
 
   return (
-    <>
+    <div className="home-table-brian-wave">
       <LeftNavigation
         version="v2"
         leftNavVersion="v2"
         // @ts-expect-error due to incompatible label type in actions
         navigationProps={leftNavigationProps}
       />
-    </>
+    </div>
   );
 };
 

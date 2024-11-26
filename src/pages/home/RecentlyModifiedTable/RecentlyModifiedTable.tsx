@@ -245,7 +245,7 @@ const getRowSelectedProp = () => {
   return (
     <>
       <div className="brain-wave-recently-modified">
-        <InfiniteScrollTable {...tableProps} />
+        {/* <InfiniteScrollTable {...tableProps} /> */}
       </div>
     </>
   );

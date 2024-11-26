@@ -1,3 +1,35 @@
 .create-new-wave {
     margin: 1.5rem !important;
 }
+
+.home-table-brian-wave .PageLayout--primary .PageLayout__content .PageLayout__head {
+    height: 9.625rem;
+}
+
+.home-table-brian-wave .PageLayout--primary .PageLayout__content .PageLayout__body {
+    top: 4rem;
+    height: calc(100vh - 13.125rem);
+}
+
+.heading-for-table-text {
+    padding-bottom: 0.75rem;
+}
+
+.home-table-brian-wave .PageLayout--primary .PageLayout__leftSidebar {
+    width: 16rem;
+}
+
+.home-table-brian-wave .PageLayout--primary .PageLayout__leftSidebar+.PageLayout__content .PageLayout__head {
+    width: calc(100% - 19.4375rem);
+}
+
+.home-table-brian-wave .PageLayout--primary .PageLayout__leftSidebar+.PageLayout__content .PageLayout__body {
+    margin-left: 19.4375rem;
+    width: calc(100% - 19.4375rem);
+}
+
+.brain-wave-table-header-wrapper {
+    padding-left: 0.7rem;
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+}
