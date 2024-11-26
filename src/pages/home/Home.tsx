@@ -122,7 +122,7 @@ const Home: React.FC<IHomeProps> = (props) => {
 
         ],
         title: (
-          <>
+          <div className="brain-wave-table-header-wrapper">
             {/* <Tooltip
               position="right"
               interactive={false}
@@ -153,7 +153,7 @@ const Home: React.FC<IHomeProps> = (props) => {
 
               />
             </div>
-          </>
+          </div>
         ),
       },
       onclick: () => {
