@@ -11,6 +11,7 @@ import { IMicroAppsObj } from "../../types/microAppObj";
 import SharedWithMe from "./SharedWithMe";
 import "./Home.css";
 import DynamicTable from "./SexyDynamicTable/DynamicTable";
+import CustomButton from "./CustomBigButton/CustomBIgButton";
 
 interface IHomeProps {
   microAppsObj: IMicroAppsObj;
@@ -97,23 +98,28 @@ const Home: React.FC<IHomeProps> = (props) => {
     { id: 29, name: 'Client Presentation', creator: 'Ava King', lastViewed: '2 hours ago' },
     { id: 30, name: 'Company Town Hall', creator: 'Liam Hall', lastViewed: '30 minutes ago' }
   ];
-  
 
-    // Function to handle row click
-    const handleRowClick = () => {
-      history.push(`${path}/create-new-wave`)
-      // You can perform any action here, such as navigating or showing details
-      console.log('Row data:');
-    };
+
+  // Function to handle row click
+  const handleRowClick = () => {
+    history.push(`${path}/create-new-wave`)
+    // You can perform any action here, such as navigating or showing details
+    console.log('Row data:');
+  };
+
+  const handleButtonClick = (buttonName: string) => {
+    console.log(`Button clicked: ${buttonName}`);
+    alert(`Button clicked: ${buttonName}`);
+  }
 
   const navigationDataArray: INavigationData[] = [
     {
       // component: <RecentlyModifiedTable microAppsObj={props.microAppsObj} />,
-      component: <DynamicTable data={response} onRowClick={handleRowClick}/>,
+      component: <DynamicTable data={response} onRowClick={handleRowClick} />,
       default: navigationID === "recently-modified",
       headerData: {
         actions: [
-          
+
         ],
         title: (
           <>
@@ -124,7 +130,29 @@ const Home: React.FC<IHomeProps> = (props) => {
               content={"Learn More About Brainwave"}
               testId={"entries_page_header_learn_more"}
             ></Tooltip> */}
-            Gang
+            <div className="heading-for-table-text">Recent</div>
+            <div style={{ display: "flex", gap: "16px", marginBottom: "16px" }}>
+              <CustomButton
+                label="New Document"
+                icon={<Icon icon="NewTab" version="v2" size="small" />}
+                onClick={() => handleButtonClick("New Document")}
+                isActive={true} /* Set to true if active */
+              />
+              <CustomButton
+                label="Templates"
+                icon={<Icon icon="Layout" version="v2" size="small" />}
+                onClick={() => handleButtonClick("Templates")}
+                isActive={true} /* Set to true if active */
+
+              />
+              <CustomButton
+                label="Import"
+                icon={<Icon icon="Download" version="v2" size="small" />}
+                onClick={() => handleButtonClick("Import")}
+                isActive={false} /* Set to true if active */
+
+              />
+            </div>
           </>
         ),
       },
@@ -169,14 +197,14 @@ const Home: React.FC<IHomeProps> = (props) => {
   };
 
   return (
-    <>
+    <div className="home-table-brian-wave">
       <LeftNavigation
         version="v2"
         leftNavVersion="v2"
         // @ts-expect-error due to incompatible label type in actions
         navigationProps={leftNavigationProps}
       />
-    </>
+    </div>
   );
 };
 

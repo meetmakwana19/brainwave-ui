@@ -1,3 +1,16 @@
 .create-new-wave {
     margin: 1.5rem !important;
 }
+
+.home-table-brian-wave .PageLayout--primary .PageLayout__content .PageLayout__head {
+    height: 9.625rem;
+}
+
+.home-table-brian-wave .PageLayout--primary .PageLayout__content .PageLayout__body {
+    top: 4rem;
+    height: calc(100vh - 13.125rem);
+}
+
+.heading-for-table-text {
+    padding-bottom: 0.5rem;
+}

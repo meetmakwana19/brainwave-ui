@@ -2,7 +2,7 @@
     width: 100%;
     max-width: 100%;
     margin: 0 auto;
-    /* padding: 5px; */
+    padding-left: 0.3rem;
     background-color: #ffffff; /* Light background */
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for modern look */
@@ -14,13 +14,18 @@
     width: 100%;
     border-collapse: collapse; /* Clean layout */
   }
+
+  /* .dynamic-table tr {
+    background-color: #f5f5f5;
+    border-radius: 0.8rem;
+  } */
   
   .dynamic-table th {
     font-size: 16px;
     font-weight: bold;
     text-align: left;
     padding: 16px;
-    background-color: #f5f5f5; /* Light grey header */
+    background-color: #ffffff;
     color: #4a4a4a; /* Darker grey text for header */
     /* border-bottom: 2px solid #e0e0e0; Subtle border for separation */
     position: sticky; /* Makes the header sticky */

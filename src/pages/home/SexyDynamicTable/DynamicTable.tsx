@@ -52,7 +52,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({ data, onRowClick }) => {
                                         handleDelete(item.id);
                                     }}
                                 >
-                                    <Icon className='delete-brain-wave-button-icon'icon='Delete' size='small' version='v2'/>
+                                    <Icon className='delete-brain-wave-button-icon' icon='Delete' size='small' version='v2'/>
                                 </button>
                                 <button
                                     className="action-button share-button"
