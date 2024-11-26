@@ -12,7 +12,7 @@ const CustomButton:React.FC<CustomButtonProps> = ({ label, icon, onClick, isActi
   return (
     <div
       className={`custom-button ${isActive ? "active" : ""}`}
-      onClick={onClick}
+      onClick={isActive ? onClick : undefined}
     >
       {icon && <div className="button-icon">{icon}</div>}
       <div className="button-label">{label}</div>

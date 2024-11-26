@@ -56,6 +56,9 @@ const Home: React.FC<IHomeProps> = (props) => {
     console.log(`Button clicked: ${buttonName}`);
     alert(`Button clicked: ${buttonName}`);
   }
+  const handleNewDocumentButtonClick = () => {
+    history.push(`${path}/create-new-wave`)
+  }
 
   const navigationDataArray: INavigationData[] = [
     {
@@ -72,7 +75,7 @@ const Home: React.FC<IHomeProps> = (props) => {
               <CustomBigButton
                 label="New Document"
                 icon={<Icon icon="NewTab" version="v2" size="small" />}
-                onClick={() => handleButtonClick("New Document")}
+                onClick={() => handleNewDocumentButtonClick()}
                 isActive={true} /* Set to true if active */
               />
               <CustomBigButton
