@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@contentstack/venus-components": "^1.8.5",
+    "@contentstack/venus-components": "github:contentstack/venus-components#brainwave",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-redux": "^7.2.9",
