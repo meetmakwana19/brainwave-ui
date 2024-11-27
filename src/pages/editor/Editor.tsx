@@ -20,7 +20,7 @@ const Editor: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="editor-section">
       <div className="sub-heading">
         <div className="title-input">
           <input

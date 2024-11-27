@@ -1,3 +1,7 @@
+.editor-section #scrte-editor > div > a {
+  display: none !important;
+}
+
 .sub-heading {
   margin-top: 2rem;
   display: flex;
