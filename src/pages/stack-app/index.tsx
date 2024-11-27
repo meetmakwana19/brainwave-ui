@@ -11,12 +11,13 @@ interface TableItem {
 interface IStackApp {
   data: TableItem[];
   onRowClick: (item: TableItem) => void;
+  viewMode?: boolean;
 }
 
 const StackApp: React.FC<IStackApp> = (props: IStackApp) => {
   return (
     <div>
-      <DynamicTable data={props.data} onRowClick={props.onRowClick} />
+      <DynamicTable data={props.data} onRowClick={props.onRowClick} viewMode={props.viewMode} />
     </div>
   );
 };
