@@ -1,0 +1,48 @@
+.sub-heading {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.editor-container {
+  font-family: Arial, sans-serif;
+  padding: 16px;
+}
+
+.title-input {
+  margin-bottom: 8px;
+}
+
+.editable-title {
+  font-size: 40px;
+  font-weight: bold;
+  border: none;
+  outline: none;
+  width: 100%;
+}
+
+.editable-title::placeholder {
+  color: #aaa;
+}
+
+.author-details {
+  font-size: 14px;
+  color: #5c5c5c;
+  display: flex !important;
+  align-items: center;
+  gap: 1rem;
+  letter-spacing: 0.2px;
+}
+
+.last-updated-details {
+  margin-top: auto;
+  margin-bottom: 16px;
+}
+.last-updated-details p {
+  font-size: 12px;
+  color: rgb(92, 92, 92);
+  font-weight: 500;
+  line-height: 16px;
+  opacity: 0.8;
+}
