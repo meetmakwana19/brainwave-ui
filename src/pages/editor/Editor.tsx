@@ -1,11 +1,12 @@
 import { Icon, JsonRTE } from "@contentstack/venus-components";
 import React, { useState } from "react";
 import "./Editor.css";
+// import { sample } from "../../sample";
 
 const Editor: React.FC = () => {
   const [title, setTitle] = useState<string>("");
-  const [author, setAuthor] = useState("Meet Makwana");
-  const [lastUpdated, setLastUpdated] = useState("12:59 11/27/2024");
+  const [author] = useState("Meet Makwana");
+  const [lastUpdated] = useState("12:59 11/27/2024");
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleContentChange = (content: any) => {
@@ -44,6 +45,7 @@ const Editor: React.FC = () => {
         onChange={handleContentChange}
         onSlashCommand={handleSlashCommand}
         toolbarMode="advance"
+        // value={sample}
       />
     </div>
   );
