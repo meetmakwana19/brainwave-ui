@@ -12,9 +12,10 @@ interface TableItem {
 interface DynamicTableProps {
     data: TableItem[];
     onRowClick: (item: TableItem) => void;
+    viewMode?: boolean;
 }
 
-const DynamicTable: React.FC<DynamicTableProps> = ({ data, onRowClick }) => {
+const DynamicTable: React.FC<DynamicTableProps> = ({ data, onRowClick, viewMode }) => {
     const [tableData, setTableData] = useState(data);
 
     // Function to handle delete
@@ -30,7 +31,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({ data, onRowClick }) => {
                     <tr>
                         <th>Name</th>
                         <th>Creator</th>
-                        <th>Last Viewed</th>
+                        <th>Viewed</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -44,7 +45,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({ data, onRowClick }) => {
                             <td>{item.name}</td>
                             <td>{item.creator}</td>
                             <td>{item.lastViewed}</td>
-                            <td className="actions">
+                            {viewMode ? null : <td className="actions">
                                 <button
                                     className="action-button delete-button"
                                     onClick={(e) => {
@@ -52,7 +53,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({ data, onRowClick }) => {
                                         handleDelete(item.id);
                                     }}
                                 >
-                                    <Icon className='delete-brain-wave-button-icon' icon='Delete' size='small' version='v2'/>
+                                    <Icon className='delete-brain-wave-button-icon' icon='Delete' size='small' version='v2' />
                                 </button>
                                 <button
                                     className="action-button share-button"
@@ -61,9 +62,9 @@ const DynamicTable: React.FC<DynamicTableProps> = ({ data, onRowClick }) => {
                                         handleDelete(item.id);
                                     }}
                                 >
-                                    <Icon className='share-brain-wave-button-icon' icon='UsersLHS' size='small' version='v2'/>
+                                    <Icon className='share-brain-wave-button-icon' icon='UsersLHS' size='small' version='v2' />
                                 </button>
-                            </td>
+                            </td>}
                         </tr>
                     ))}
                 </tbody>
