@@ -18,10 +18,19 @@ const EditorPage: React.FC = () => {
       <PageHeader
         title={{
           label: (
-            <div>
+            <div className="editor-heading">
               <Truncate truncateFrom="end" maxChar={32}>
                 Untitled Wave
               </Truncate>
+
+              <ButtonGroup>
+                <Button version="v2" buttonType="tertiary" icon="v2-Lock">
+                  Share
+                </Button>
+                <Button version="v2" buttonType="primary">
+                  Connect
+                </Button>
+              </ButtonGroup>
             </div>
           ),
         }}
@@ -39,18 +48,7 @@ const EditorPage: React.FC = () => {
   };
 
   const pageFooter = {
-    component: (
-      <div className="editor-footer">
-        <ButtonGroup>
-          <Button version="v2" buttonType="tertiary" icon="v2-Lock">
-            Share
-          </Button>
-          <Button version="v2" buttonType="primary">
-            Connect
-          </Button>
-        </ButtonGroup>
-      </div>
-    ),
+    component: <div className="editor-footer"></div>,
   };
 
   return (

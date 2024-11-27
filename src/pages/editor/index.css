@@ -9,4 +9,18 @@
 
 .editor-page-layout .PageTitleWrapper {
   margin-left: 0.75rem;
+  width: 100%;
+}
+
+.editor-page-layout .PageTitle {
+  width: 100%;
+}
+
+.editor-heading {
+  display: flex;
+  justify-content: space-between;
+
+  /* .Button__group {
+    margin-right: 10px;
+  } */
 }
