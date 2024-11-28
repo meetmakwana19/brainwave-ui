@@ -6,8 +6,9 @@ import { useLocation, useParams } from "react-router-dom";
 import debounce from "lodash.debounce";
 import { putDocument } from "../../api/document";
 import { TableItem } from "../../common/types";
+import { isEmpty } from "../../common/utils/utils";
 
-interface IEditor { 
+interface IEditor {
   isContentEmpty: boolean;
   setIsContentEmpty: React.Dispatch<React.SetStateAction<boolean>>;
   docTitle: string;
@@ -23,10 +24,8 @@ const Editor: React.FC<IEditor> = (props) => {
   const [dontShowToolBar, setDontShowToolBar] = useState(false);
   const location = useLocation();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const editorContentRef = useRef<any>(null);
+  const editorContentRef = useRef<any>([]);
   const { documentUid } = useParams<{ documentUid: string }>();
-
-  console.log("isContentEmpty", props.isContentEmpty);
 
   useEffect(() => {
     setTitle(props.docTitle);
@@ -98,9 +97,9 @@ const Editor: React.FC<IEditor> = (props) => {
     handleDebouncedChange(content);
   };
 
-  const handleButtonClick = () => { 
+  const handleButtonClick = () => {
     console.log(`Button clicked: Add to Entry`);
-  }
+  };
 
   return (
     <div
@@ -121,8 +120,9 @@ const Editor: React.FC<IEditor> = (props) => {
             className="editable-title"
             disabled={dontShowToolBar}
           />
-          {/* {props.isStackEditor && <Button onClick={() => { handleButtonClick() }}>Add to Entry</Button>} */}
-          {props.isStackEditor && <Button onClick={() =>   handleButtonClick() }>Add to Entry</Button>}
+          {props.isStackEditor && (
+            <Button onClick={() => handleButtonClick()}>Add to Entry</Button>
+          )}
         </div>
         <div className="author-details">
           <Icon icon="User" version="v2" size="small" />
@@ -134,12 +134,12 @@ const Editor: React.FC<IEditor> = (props) => {
         </div>
       </div>
 
-      {editorContentRef.current ? (
+      {editorContentRef.current && !isEmpty(editorContentRef.current) ? (
         <JsonRTE
           onChange={handleContentChange}
           toolbarMode="advance"
           disabled={dontShowToolBar}
-          value={editorContentRef.current}
+          value={editorContentRef.current || []}
         />
       ) : (
         <JsonRTE
