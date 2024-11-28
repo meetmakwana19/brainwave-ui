@@ -1,4 +1,4 @@
-import { Icon, JsonRTE } from "@contentstack/venus-components";
+import { Button, Icon, JsonRTE } from "@contentstack/venus-components";
 import React, { useEffect, useRef, useState } from "react";
 import "./Editor.css";
 import { useLocation, useParams } from "react-router-dom";
@@ -6,11 +6,15 @@ import { useLocation, useParams } from "react-router-dom";
 import debounce from "lodash.debounce";
 import { putDocument } from "../../api/document";
 
-interface IEditor {
+interface IEditor { 
+  isContentEmpty: boolean;
+  setIsContentEmpty: React.Dispatch<React.SetStateAction<boolean>>;
   docTitle: string;
   setDocTitle: React.Dispatch<React.SetStateAction<string>>;
+  isStackEditor?: boolean;
 }
-const Editor: React.FC<IEditor> = ({ docTitle, setDocTitle }) => {
+
+const Editor: React.FC<IEditor> = (props) => {
   const [title, setTitle] = useState<string>("");
   const [author] = useState("Meet Makwana");
   const [lastUpdated] = useState("12:59 11/27/2024");
@@ -18,14 +22,13 @@ const Editor: React.FC<IEditor> = ({ docTitle, setDocTitle }) => {
   const location = useLocation();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const editorContentRef = useRef<any>(null);
-  const [isContentEmpty, setIsContentEmpty] = useState(true);
   const { documentUid } = useParams<{ documentUid: string }>();
 
-  console.log("isContentEmpty", isContentEmpty);
+  console.log("isContentEmpty", props.isContentEmpty);
 
   useEffect(() => {
-    setTitle(docTitle);
-  }, [docTitle]);
+    setTitle(props.docTitle);
+  }, [props.docTitle]);
 
   useEffect(() => {
     const pathArray = location.pathname.split("/");
@@ -70,7 +73,7 @@ const Editor: React.FC<IEditor> = ({ docTitle, setDocTitle }) => {
     putDocument(documentUid, putPayload)
       .then((response) => {
         console.log("Document updated successfully", response);
-        setDocTitle(response.title);
+        props.setDocTitle(response.title);
       })
       .catch((error) => {
         console.error("Error in updating document", error);
@@ -80,14 +83,17 @@ const Editor: React.FC<IEditor> = ({ docTitle, setDocTitle }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleContentChange = (content: any) => {
     console.log("Editor content updated:", content);
-
     // setEditorContent(content);
     const isEmpty = checkIsContentEmpty(content);
-    setIsContentEmpty(isEmpty);
-
+    props.setIsContentEmpty(isEmpty);
     editorContentRef.current = content;
     handleDebouncedChange(content);
   };
+
+  const handleButtonClick = () => { 
+    console.log(`Button clicked: Add to Entry`);
+    alert(`Button clicked: here`);
+  }
 
   return (
     <div
@@ -108,6 +114,7 @@ const Editor: React.FC<IEditor> = ({ docTitle, setDocTitle }) => {
             className="editable-title"
             disabled={dontShowToolBar}
           />
+          <Button onClick={handleButtonClick()}>Add to Entry</Button>
         </div>
         <div className="author-details">
           <Icon icon="User" version="v2" size="small" />

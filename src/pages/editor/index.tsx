@@ -10,6 +10,8 @@ import React, { useEffect, useState } from "react";
 import "./index.css";
 import { useHistory } from "react-router-dom";
 import Editor from "./Editor";
+import { IMicroAppsObj } from "../../types/microAppObj";
+import CustomBigButton from "../home/CustomBigButton/CustomBigButton";
 import { isEmpty } from "../../common/utils/utils";
 
 interface ISelectedValue {
@@ -34,14 +36,20 @@ interface IBrandKit {
   updated_by: string;
 }
 
+interface IEditorPage {
+  microAppsObj: IMicroAppsObj;
+}
 
-const EditorPage: React.FC = () => {
+
+const EditorPage: React.FC<IEditorPage> = (props) => {
+  const path = props.microAppsObj.relativeUrl;
   const history = useHistory();
   const [voiceProfiles, setVoiceProfiles] = useState<IBrandKit[]>([]); // State to store voice profiles
   const [selectedVoiceProfile, setSelectedVoiceProfile] = useState<string>("Pick Writing Style"); // Track selected VP
   const [docTitle, setDocTitle] = useState("");
 
   // const [loading, setLoading] = useState<boolean>(false);
+  const [isContentEmpty, setIsContentEmpty] = useState(true);
 
   const voiceProfileList = async () => {
     const url =
@@ -99,7 +107,16 @@ const EditorPage: React.FC = () => {
     const selectedVoiceProfile = selectedValue.label
     setSelectedVoiceProfile(selectedVoiceProfile || "Pick Writing Style");
     console.log("Selected Voice Profile:", selectedValue);
+    console.log("isContentEmpty", isContentEmpty);
   };
+
+  const handleButtonClick = (buttonName: string) => {
+    console.log(`Button clicked: ${buttonName}`);
+    alert(`Button clicked: ${buttonName}`);
+  }
+  const handleNewDocumentButtonClick = () => {
+    history.push(`${path}/create-new-wave`)
+  }
 
   const header = {
     component: (
@@ -129,7 +146,7 @@ const EditorPage: React.FC = () => {
                   withSearch={true}
                   closeAfterSelect={true}
                   onChange={(selectedProfileUid: ISelectedValue) => handleVoiceProfileChange(selectedProfileUid)} // Pass the function reference
-                  // loading={loading} // Show loading state
+                // loading={loading} // Show loading state
                 >
                   <Icon icon="BrandKitLogo" version="v2" size="medium" />
                   <div className="dropdown-label">{selectedVoiceProfile}</div>
@@ -152,14 +169,34 @@ const EditorPage: React.FC = () => {
   const content = {
     component: (
       <div>
-        <Editor docTitle={docTitle} setDocTitle={setDocTitle}/>
+        <Editor isContentEmpty={isContentEmpty} setIsContentEmpty={setIsContentEmpty} docTitle={docTitle} setDocTitle={setDocTitle}/>
+          <div className={`${isContentEmpty ? 'editor-bottom-button-container' : 'editor-bottom-button-container-closing'}`}>
+            <CustomBigButton
+              label="New Document"
+              icon={<Icon icon="NewTab" version="v2" size="small" />}
+              onClick={() => handleNewDocumentButtonClick()}
+              isActive={true} /* Set to true if active */
+            />
+            <CustomBigButton
+              label="Templates"
+              icon={<Icon icon="Layout" version="v2" size="small" />}
+              onClick={() => handleButtonClick("Templates")}
+              isActive={true} /* Set to true if active */
+            />
+            <CustomBigButton
+              label="Import"
+              icon={<Icon icon="Download" version="v2" size="small" />}
+              onClick={() => handleButtonClick("Import")}
+              isActive={false} /* Set to true if active */
+            />
+          </div>
       </div>
     ),
   };
 
-  const pageFooter = {
-    component: <div className="editor-footer"></div>,
-  };
+  // const pageFooter = {
+  //   component: <div className="editor-footer"></div>,
+  // };
 
   return (
     <div className="editor-page-layout">
@@ -167,8 +204,8 @@ const EditorPage: React.FC = () => {
         type="edit"
         header={header}
         content={content}
-        // rightSidebar={rightNav}
-        footer={pageFooter}
+      // rightSidebar={rightNav}
+      // footer={pageFooter}
       />{" "}
     </div>
   );
