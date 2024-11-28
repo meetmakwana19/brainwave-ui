@@ -85,7 +85,6 @@ const Editor: React.FC = () => {
 
       <JsonRTE
         onChange={handleContentChange}
-        onSlashCommand={handleSlashCommand}
         toolbarMode="advance"
         disabled={dontShowToolBar}
         // value={sample}
