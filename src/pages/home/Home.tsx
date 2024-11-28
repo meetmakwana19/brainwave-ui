@@ -10,7 +10,6 @@ import SharedWithMe from "./SharedWithMe";
 import "./Home.css";
 import DynamicTable from "./SexyDynamicTable/DynamicTable";
 import CustomBigButton from "./CustomBigButton/CustomBigButton";
-import { demoResponse } from "../../common/utils/DemoResponse"
 
 interface IHomeProps {
   microAppsObj: IMicroAppsObj;
@@ -43,8 +42,6 @@ const Home: React.FC<IHomeProps> = (props) => {
   const { navigationID } = useParams<RouteParams>();
   const history = useHistory();
 
-  const response = demoResponse
-
   // Function to handle row click
   const handleRowClick = () => {
     history.push(`${path}/create-new-wave`)
@@ -62,7 +59,7 @@ const Home: React.FC<IHomeProps> = (props) => {
 
   const navigationDataArray: INavigationData[] = [
     {
-      component: <DynamicTable data={response} onRowClick={handleRowClick} />,
+      component: <DynamicTable onRowClick={handleRowClick} />,
       default: navigationID === "recently-modified",
       headerData: {
         actions: [

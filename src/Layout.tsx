@@ -5,8 +5,7 @@ import PageNotFound from "./common/components/ErrorBoundary/PageNotFound";
 import { IMicroAppsObj } from "./types/microAppObj";
 import EditorPage from "./pages/editor";
 import StackApp from "./pages/stack-app";
-import { demoResponse } from "./common/utils/DemoResponse";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import StackEditor from "./pages/stack-editor";
 
 interface ILayout {
@@ -16,14 +15,13 @@ interface ILayout {
 
 const Layout: React.FC<ILayout> = (props) => {
   const history = useHistory();
-  const location = useLocation();
-  console.log(location.pathname);
+  
   const handleRowClick = () => {
     history.push(`${path}/stack-create-new-wave`)
     console.log(handleRowClick);
   };
   const path = props.microAppsObj.relativeUrl;
-
+  
   return (
     <>
       <div className="brainwave-routes">
@@ -32,7 +30,7 @@ const Layout: React.FC<ILayout> = (props) => {
             exact
             path={`${props.microAppsObj.relativeUrl}/stack-app-view`}
           >
-            <StackApp data={demoResponse} onRowClick={handleRowClick} viewMode={true} />
+            <StackApp onRowClick={handleRowClick} viewMode={true} />
           </Route>
 
           <Route
