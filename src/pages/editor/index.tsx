@@ -52,7 +52,13 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
   const [docData, setDocData] = useState<TableItem>({} as TableItem);
   const { documentUid } = useParams<{ documentUid: string }>();
   const [loading, setLoading] = useState<boolean>(true);
-  const [stacksData, setStacksData] = useState<{ name: string; uid: string }[]>([]);
+  const [stacksData, setStacksData] = useState<{ name: string; uid: string }[]>(
+    []
+  );
+  const [checkedStacks, setCheckedStacks] = useState<Map<string, boolean>>(new Map());
+
+  const [selectedStacks, setSelectedStacks] = useState<{ [key: string]: boolean }>({});
+
 
   // const [loading, setLoading] = useState<boolean>(false);
   const [isContentEmpty, setIsContentEmpty] = useState(true);
@@ -148,8 +154,32 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
   const handleStackChange = (selectedStack: ISelectedValue) => {
     console.log("Selected Stack:", selectedStack);
     // You can use selectedStack.value (uid) for further actions or data fetching
+
+    const isChecked = checkedStacks.get(selectedStack.value);
+
+    setCheckedStacks((prevCheckedStacks) => {
+      const updatedCheckedStacks = new Map(prevCheckedStacks);
+      updatedCheckedStacks.set(selectedStack.value, !isChecked);
+      return updatedCheckedStacks;
+    });
+
+    setSelectedStacks((prevSelectedStacks) => {
+      // Toggle the checked state for the selected stack
+      const isChecked = prevSelectedStacks[selectedStack.value] || false;
+      return {
+        ...prevSelectedStacks,
+        [selectedStack.value]: !isChecked,
+      };
+    });
+
+
   };
-  
+
+  const getLabelWithCheck = (stack: { name: string; uid: string }) => {
+    const isChecked = selectedStacks[stack.uid] || false;
+    return isChecked ? `${stack.name} ✅` : stack.name;
+  };
+
   const header = {
     component: (
       <PageHeader
@@ -185,18 +215,12 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
                   <Icon icon="BrandKitLogo" version="v2" size="medium" />
                   <div className="dropdown-label">{selectedVoiceProfile}</div>
                 </Dropdown>
-                <Button version="v2" buttonType="tertiary" icon="v2-Lock">
-                  Share
-                </Button>
 
-                {/* <Button version="v2" buttonType="primary">
-                  Connect
-                </Button> */}
                 <Dropdown
                   version="v2"
                   list={stacksData.map(
                     (stack: { name: string; uid: string }) => ({
-                      label: stack.name, // Display the name of the stack
+                      label: getLabelWithCheck(stack), // Display the name of the stack
                       value: stack.uid, // Store the stack UID as the value
                     })
                   )}
@@ -209,8 +233,16 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
                   className="stack-dropdown"
                 >
                   <Icon icon="Stacks" version="v2" size="medium" />
-                  <div className="dropdown-label">Select Stack</div>
+                  <div className="dropdown-label">Connect Stack</div>
                 </Dropdown>
+
+                <Button version="v2" buttonType="tertiary" icon="v2-Lock">
+                  Share
+                </Button>
+
+                {/* <Button version="v2" buttonType="primary">
+                  Connect
+                </Button> */}
               </>
             ),
           },
