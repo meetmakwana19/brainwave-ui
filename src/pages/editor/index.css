@@ -39,3 +39,16 @@
 .editor-page-layout .PageTitleWrapper {
   width: auto !important;
 }
+
+.editor-bottom-button-container{
+  padding: 32px;
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.editor-bottom-button-container-closing {
+  transform: translateY(200px); /* Move down by 100px */
+  visibility: hidden; /* Become hidden */
+  transition: transform 0.75s ease, visibility 0.75s ease;
+}

@@ -4,15 +4,18 @@ import "./Editor.css";
 import { useLocation } from "react-router-dom";
 // import { sample } from "../../sample";
 
-const Editor: React.FC = () => {
+interface IEditor { 
+  isContentEmpty: boolean;
+  setIsContentEmpty: (value: boolean) => void;
+}
+
+const Editor: React.FC<IEditor> = (props) => {
   const [title, setTitle] = useState<string>("");
   const [author] = useState("Meet Makwana");
   const [lastUpdated] = useState("12:59 11/27/2024");
   const [dontShowToolBar, setDontShowToolBar] = useState(false);
   const location = useLocation();
-  const [isContentEmpty, setIsContentEmpty] = useState(true);
 
-  console.log("isContentEmpty", isContentEmpty);  
 
   useEffect(() => {
     const pathArray = location.pathname.split("/");
@@ -21,7 +24,7 @@ const Editor: React.FC = () => {
 
     console.log("meet canRemove : ", canRemove);
     setDontShowToolBar(canRemove);
-
+    
   }, [location]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const checkIsContentEmpty = (content: any[]): boolean => {
@@ -49,7 +52,7 @@ const Editor: React.FC = () => {
 
     // setEditorContent(content);
     const isEmpty = checkIsContentEmpty(content);
-    setIsContentEmpty(isEmpty);
+    props.setIsContentEmpty(isEmpty);
   };
 
   const handleSlashCommand = (command: string) => {

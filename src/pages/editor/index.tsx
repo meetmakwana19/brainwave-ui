@@ -35,7 +35,7 @@ interface IBrandKit {
   updated_by: string;
 }
 
-interface IEditorPage { 
+interface IEditorPage {
   microAppsObj: IMicroAppsObj;
 }
 
@@ -46,6 +46,7 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
   const [voiceProfiles, setVoiceProfiles] = useState<IBrandKit[]>([]); // State to store voice profiles
   const [selectedVoiceProfile, setSelectedVoiceProfile] = useState<string>("Pick Writing Style"); // Track selected VP
   // const [loading, setLoading] = useState<boolean>(false);
+  const [isContentEmpty, setIsContentEmpty] = useState(true);
 
   const voiceProfileList = async () => {
     const url =
@@ -103,6 +104,7 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
     const selectedVoiceProfile = selectedValue.label
     setSelectedVoiceProfile(selectedVoiceProfile || "Pick Writing Style");
     console.log("Selected Voice Profile:", selectedValue);
+    console.log("isContentEmpty", isContentEmpty);
   };
 
   const handleButtonClick = (buttonName: string) => {
@@ -141,7 +143,7 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
                   withSearch={true}
                   closeAfterSelect={true}
                   onChange={(selectedProfileUid: ISelectedValue) => handleVoiceProfileChange(selectedProfileUid)} // Pass the function reference
-                  // loading={loading} // Show loading state
+                // loading={loading} // Show loading state
                 >
                   <Icon icon="BrandKitLogo" version="v2" size="medium" />
                   <div className="dropdown-label">{selectedVoiceProfile}</div>
@@ -164,27 +166,27 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
   const content = {
     component: (
       <div>
-        <Editor />
-        <div className="editor-bottom-button-container" style={{ display: "flex", gap: "16px", marginBottom: "16px" }}>
-              <CustomBigButton
-                label="New Document"
-                icon={<Icon icon="NewTab" version="v2" size="small" />}
-                onClick={() => handleNewDocumentButtonClick()}
-                isActive={true} /* Set to true if active */
-              />
-              <CustomBigButton
-                label="Templates"
-                icon={<Icon icon="Layout" version="v2" size="small" />}
-                onClick={() => handleButtonClick("Templates")}
-                isActive={true} /* Set to true if active */
-              />
-              <CustomBigButton
-                label="Import"
-                icon={<Icon icon="Download" version="v2" size="small" />}
-                onClick={() => handleButtonClick("Import")}
-                isActive={false} /* Set to true if active */
-              />
-            </div>
+        <Editor isContentEmpty={isContentEmpty} setIsContentEmpty={setIsContentEmpty} />
+          <div className={`${isContentEmpty ? 'editor-bottom-button-container' : 'editor-bottom-button-container-closing'}`}>
+            <CustomBigButton
+              label="New Document"
+              icon={<Icon icon="NewTab" version="v2" size="small" />}
+              onClick={() => handleNewDocumentButtonClick()}
+              isActive={true} /* Set to true if active */
+            />
+            <CustomBigButton
+              label="Templates"
+              icon={<Icon icon="Layout" version="v2" size="small" />}
+              onClick={() => handleButtonClick("Templates")}
+              isActive={true} /* Set to true if active */
+            />
+            <CustomBigButton
+              label="Import"
+              icon={<Icon icon="Download" version="v2" size="small" />}
+              onClick={() => handleButtonClick("Import")}
+              isActive={false} /* Set to true if active */
+            />
+          </div>
       </div>
     ),
   };
@@ -199,8 +201,8 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
         type="edit"
         header={header}
         content={content}
-        // rightSidebar={rightNav}
-        // footer={pageFooter}
+      // rightSidebar={rightNav}
+      // footer={pageFooter}
       />{" "}
     </div>
   );
