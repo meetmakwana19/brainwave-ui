@@ -30,14 +30,14 @@
   } */
 }
 
-.dropdown-label{
+.dropdown-label {
   padding: 0.5rem;
   /* color: #6c5ce7 !important; */
   padding: 0.5rem !important;
   font-size: 15px !important;
   font-weight: 600 !important;
 }
-.dropdown-label:hover{
+.dropdown-label:hover {
   color: #6c5ce7 !important;
 }
 
@@ -45,7 +45,7 @@
   width: auto !important;
 }
 
-.editor-bottom-button-container{
+.editor-bottom-button-container {
   padding: 32px;
   display: flex;
   gap: 16px;
@@ -60,4 +60,8 @@
   display: flex;
   gap: 16px;
   margin-bottom: 16px;
+}
+
+.stack-dropdown div svg:nth-of-type(2) {
+  display: none;
 }

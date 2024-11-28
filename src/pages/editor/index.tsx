@@ -13,7 +13,7 @@ import Editor from "./Editor";
 import { IMicroAppsObj } from "../../types/microAppObj";
 import CustomBigButton from "../home/CustomBigButton/CustomBigButton";
 import { isEmpty } from "../../common/utils/utils";
-import { getSingleDocument } from "../../api/document";
+import { fetchStacks, getSingleDocument } from "../../api/document";
 import { TableItem } from "../../common/types";
 
 interface ISelectedValue {
@@ -52,6 +52,7 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
   const [docData, setDocData] = useState<TableItem>({} as TableItem);
   const { documentUid } = useParams<{ documentUid: string }>();
   const [loading, setLoading] = useState<boolean>(true);
+  const [stacksData, setStacksData] = useState<{ name: string; uid: string }[]>([]);
 
   // const [loading, setLoading] = useState<boolean>(false);
   const [isContentEmpty, setIsContentEmpty] = useState(true);
@@ -106,6 +107,13 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
   }, []);
 
   useEffect(() => {
+    fetchStacks(props.microAppsObj).then((response) => {
+      console.log("Stacks fetched successfully", response.stacks);
+      setStacksData(response.stacks);
+    });
+  }, [props.microAppsObj]);
+
+  useEffect(() => {
     setLoading(true);
     getSingleDocument(documentUid)
       .then((response) => {
@@ -137,6 +145,11 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
     history.push(`${path}/create-new-wave`);
   };
 
+  const handleStackChange = (selectedStack: ISelectedValue) => {
+    console.log("Selected Stack:", selectedStack);
+    // You can use selectedStack.value (uid) for further actions or data fetching
+  };
+  
   const header = {
     component: (
       <PageHeader
@@ -175,9 +188,29 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
                 <Button version="v2" buttonType="tertiary" icon="v2-Lock">
                   Share
                 </Button>
-                <Button version="v2" buttonType="primary">
+
+                {/* <Button version="v2" buttonType="primary">
                   Connect
-                </Button>
+                </Button> */}
+                <Dropdown
+                  version="v2"
+                  list={stacksData.map(
+                    (stack: { name: string; uid: string }) => ({
+                      label: stack.name, // Display the name of the stack
+                      value: stack.uid, // Store the stack UID as the value
+                    })
+                  )}
+                  type="click"
+                  withArrow={true}
+                  highlightActive={true}
+                  withSearch={true}
+                  closeAfterSelect={true}
+                  onChange={handleStackChange} // Pass the function to handle selection
+                  className="stack-dropdown"
+                >
+                  <Icon icon="Stacks" version="v2" size="medium" />
+                  <div className="dropdown-label">Select Stack</div>
+                </Dropdown>
               </>
             ),
           },
