@@ -65,7 +65,7 @@ const Home: React.FC<IHomeProps> = (props) => {
         </>
       ),
       modalProps: {
-        size: "small",
+        size: "max",
         customClass: "template-modal",
       },
     });
