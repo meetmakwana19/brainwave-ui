@@ -6,7 +6,7 @@ import { useLocation, useParams } from "react-router-dom";
 import debounce from "lodash.debounce";
 import { putDocument } from "../../api/document";
 import { TableItem } from "../../common/types";
-import { isEmpty } from "../../common/utils/utils";
+import { formatDate, isEmpty } from "../../common/utils/utils";
 
 interface IEditor {
   isContentEmpty: boolean;
@@ -130,7 +130,7 @@ const Editor: React.FC<IEditor> = (props) => {
         </div>
         <div className="last-updated-details">
           {" "}
-          <p>Last updated at {lastUpdated}</p>
+          <p>Last updated at {formatDate(lastUpdated)}</p>
         </div>
       </div>
 
