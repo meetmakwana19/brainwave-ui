@@ -10,7 +10,7 @@ import { formatDate, isEmpty } from "../../common/utils/utils";
 
 interface IEditor {
   isContentEmpty: boolean;
-  setIsContentEmpty: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsContentEmpty?: React.Dispatch<React.SetStateAction<boolean>>;
   docTitle: string;
   setDocTitle: React.Dispatch<React.SetStateAction<string>>;
   isStackEditor?: boolean;
@@ -92,7 +92,9 @@ const Editor: React.FC<IEditor> = (props) => {
     console.log("Editor content updated:", content);
     // setEditorContent(content);
     const isEmpty = checkIsContentEmpty(content);
-    props.setIsContentEmpty(isEmpty);
+    if (props.setIsContentEmpty) {
+      props.setIsContentEmpty(isEmpty);
+    }
     editorContentRef.current = content;
     handleDebouncedChange(content);
   };
