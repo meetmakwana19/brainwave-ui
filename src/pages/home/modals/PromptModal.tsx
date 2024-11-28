@@ -24,7 +24,7 @@ const PromptModal: React.FC<IPromptModal> = (props) => {
     <>
       <ModalHeader
         version="v2"
-        title="Prompt Modal"
+        title="New Brainwave"
         closeModal={props.closeModal}
       />
       <ModalBody>
