@@ -1,7 +1,13 @@
-import { ModalBody, ModalHeader } from "@contentstack/venus-components";
+import {
+  cbModal,
+  ModalBody,
+  ModalHeader,
+} from "@contentstack/venus-components";
 import React, { useEffect, useState } from "react";
 import "./TemplateModal.css";
 import templateImage from "./image.png"; // Import the uploaded image
+import { ModalProps } from "@contentstack/venus-components/build/components/Modal/Modal";
+import PromptModal from "./PromptModal";
 
 interface ITemplateModal {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -45,7 +51,9 @@ const TemplateModal: React.FC<ITemplateModal> = (props) => {
   useEffect(() => {
     const fetchTemplates = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/templates`);
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/templates`
+        );
         const data = await response.json();
         console.log(data);
 
@@ -66,6 +74,24 @@ const TemplateModal: React.FC<ITemplateModal> = (props) => {
     fetchTemplates();
   }, []);
 
+  const handleTemplateClick = async () => {
+    // Close the Templates modal
+    if (props.closeModal) {
+      await props.closeModal({});
+    }
+
+    cbModal({
+      component: (props: ModalProps) => (
+        <>
+          <PromptModal closeModal={props.onClose} {...props} />
+        </>
+      ),
+      modalProps: {
+        size: "max",
+        customClass: "template-modal",
+      },
+    });
+  };
   return (
     <>
       <ModalHeader
@@ -76,7 +102,11 @@ const TemplateModal: React.FC<ITemplateModal> = (props) => {
       <ModalBody version="v2">
         <div className="templates-grid">
           {templates.map((template) => (
-            <div key={template.id} className="template-tile">
+            <div
+              key={template.id}
+              className="template-tile"
+              onClick={handleTemplateClick}
+            >
               <img
                 src={templateImage}
                 alt="Template"
