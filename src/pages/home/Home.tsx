@@ -4,14 +4,14 @@ import {
   LeftNavigation,
   Tooltip,
 } from "@contentstack/venus-components";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { IMicroAppsObj } from "../../types/microAppObj";
 import SharedWithMe from "./SharedWithMe";
 import "./Home.css";
 import DynamicTable from "./SexyDynamicTable/DynamicTable";
 import CustomBigButton from "./CustomBigButton/CustomBigButton";
-import { postDocument } from "../../api/document";
+import { getAllDocuments, postDocument } from "../../api/document";
 import { TableItem } from "../../common/types";
 import { ModalProps } from "@contentstack/venus-components/build/components/Modal/Modal";
 import TemplateModal from "./modals/TemplateModal";
@@ -43,9 +43,16 @@ interface RouteParams {
 }
 
 const Home: React.FC<IHomeProps> = (props) => {
+  const [documentData, setDocumentData] = useState<TableItem[]>([]);
   const path = props.microAppsObj.relativeUrl;
   const { navigationID } = useParams<RouteParams>();
   const history = useHistory();
+
+  useEffect(() => {
+    getAllDocuments().then((data) => {
+      setDocumentData(data);
+    });
+  }, []);
 
   const handleButtonClick = (buttonName: string) => {
     console.log(`Button clicked: ${buttonName}`);
@@ -82,16 +89,15 @@ const Home: React.FC<IHomeProps> = (props) => {
   };
 
   const handleRowClick = (item: TableItem) => {
-
     history.push(`${path}/wave-editor/${item.uid}`);
-    // You can perform any action here, such as navigating or showing details
     console.log("Row data:", item);
   };
 
-
   const navigationDataArray: INavigationData[] = [
     {
-      component: <DynamicTable data={[]} onRowClick={handleRowClick}/>,
+      component: (
+        <DynamicTable data={documentData} onRowClick={handleRowClick} />
+      ),
       default: navigationID === "recently-modified",
       headerData: {
         actions: [],

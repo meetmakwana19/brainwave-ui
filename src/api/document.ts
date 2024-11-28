@@ -1,5 +1,9 @@
 import { Document } from "../common/types";
 
+export const getAllDocuments = async () => {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/documents`);
+    return await response.json();
+}
 export const getSingleDocument = async (documentUid: string) => {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/documents/${documentUid}`);
     return await response.json();

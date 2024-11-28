@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DynamicTable from "../home/SexyDynamicTable/DynamicTable";
 import { TableItem } from "../../common/types";
+import { getAllDocuments } from "../../api/document";
 
 interface IStackApp {
   onRowClick: (item: TableItem) => void;
@@ -11,16 +12,10 @@ const StackApp: React.FC<IStackApp> = (props: IStackApp) => {
   const [documentData, setDocumentData] = useState<TableItem[]>([]);
 
   useEffect(() => {
-    fetchDocuments();
+    getAllDocuments().then((data) => {
+      setDocumentData(data);
+    });
   }, []);
-
-  const fetchDocuments = async () => {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/documents`);
-
-    const data = await response.json();
-
-    setDocumentData(data);
-  };
 
   return (
     <div>
