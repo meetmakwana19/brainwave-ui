@@ -39,13 +39,6 @@ const Home: React.FC<IHomeProps> = (props) => {
   const { navigationID } = useParams<RouteParams>();
   const history = useHistory();
 
-  // Function to handle row click
-  const handleRowClick = () => {
-    history.push(`${path}/create-new-wave`);
-    // You can perform any action here, such as navigating or showing details
-    console.log("Row data:");
-  };
-
   const handleButtonClick = (buttonName: string) => {
     console.log(`Button clicked: ${buttonName}`);
     alert(`Button clicked: ${buttonName}`);
@@ -62,12 +55,12 @@ const Home: React.FC<IHomeProps> = (props) => {
       .catch((error) => {
         console.error("Error in creating document", error);
       });
-    history.push(`${path}/create-new-wave`);
+    history.push(`${path}/wave-editor`);
   };
 
   const navigationDataArray: INavigationData[] = [
     {
-      component: <DynamicTable onRowClick={handleRowClick} />,
+      component: <DynamicTable microAppsObj={props.microAppsObj} />,
       default: navigationID === "recently-modified",
       headerData: {
         actions: [],

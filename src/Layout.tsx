@@ -42,7 +42,7 @@ const Layout: React.FC<ILayout> = (props) => {
 
           <Route
             exact
-            path={`${props.microAppsObj.relativeUrl}/create-new-wave`}
+            path={`${props.microAppsObj.relativeUrl}/wave-editor/:documentUid`}
           >
             <EditorPage />
           </Route>
