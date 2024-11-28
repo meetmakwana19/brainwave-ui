@@ -129,7 +129,6 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
 
   const handleButtonClick = (buttonName: string) => {
     console.log(`Button clicked: ${buttonName}`);
-    alert(`Button clicked: ${buttonName}`);
   }
   const handleNewDocumentButtonClick = () => {
     history.push(`${path}/create-new-wave`)

@@ -100,7 +100,6 @@ const Editor: React.FC<IEditor> = (props) => {
 
   const handleButtonClick = () => { 
     console.log(`Button clicked: Add to Entry`);
-    alert(`Button clicked: here`);
   }
 
   return (
