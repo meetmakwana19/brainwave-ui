@@ -191,7 +191,7 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
     component: loading ? (
       <>Loading</>
     ) : (
-      <div>
+      <div className="editor-container">
         <Editor
           isContentEmpty={isContentEmpty}
           setIsContentEmpty={setIsContentEmpty}

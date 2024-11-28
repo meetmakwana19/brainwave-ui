@@ -16,6 +16,11 @@
   width: 100%;
 }
 
+.editor-page-layout .PageLayout__body__container .editor-container {
+  width: 55%;
+  margin: 0 auto;
+}
+
 .editor-heading {
   display: flex;
   justify-content: space-between;
