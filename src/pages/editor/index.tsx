@@ -16,9 +16,27 @@ interface ISelectedValue {
   value: string;
 }
 
+interface IBrandKit {
+  brand_kit_uid: string;
+  communication_style: {
+    formality_level: number;
+    tone: number;
+    humor_level: number;
+    complexity_level: number;
+  };
+  created_at: string;
+  created_by: string;
+  deleted_at: boolean;
+  name: string;
+  uid: string;
+  updated_at: string;
+  updated_by: string;
+}
+
+
 const EditorPage: React.FC = () => {
   const history = useHistory();
-  const [voiceProfiles, setVoiceProfiles] = useState<any[]>([]); // State to store voice profiles
+  const [voiceProfiles, setVoiceProfiles] = useState<IBrandKit[]>([]); // State to store voice profiles
   const [selectedVoiceProfile, setSelectedVoiceProfile] = useState<string>("Pick Writing Style"); // Track selected VP
   // const [loading, setLoading] = useState<boolean>(false);
 
@@ -58,6 +76,7 @@ const EditorPage: React.FC = () => {
       }
 
       const data = await response.json();
+      console.log("Voice Profiles:", data?.voice_profiles);
       setVoiceProfiles(data?.voice_profiles || []);
     } catch (error) {
       console.error("Error fetching voice profiles:", error);
