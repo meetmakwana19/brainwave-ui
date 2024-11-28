@@ -32,6 +32,8 @@
 
 .title-input {
   margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .title-input input:disabled {
@@ -43,7 +45,7 @@
   font-weight: bold;
   border: none;
   outline: none;
-  width: 100%;
+  width: auto;
 }
 
 .editable-title::placeholder {

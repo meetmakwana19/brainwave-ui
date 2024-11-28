@@ -1,12 +1,17 @@
-import { Icon, JsonRTE } from "@contentstack/venus-components";
-import React, { useEffect, useState } from "react";
+import { Button, Icon, JsonRTE } from "@contentstack/venus-components";
+import React, { useEffect, useRef, useState } from "react";
 import "./Editor.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 // import { sample } from "../../sample";
+import debounce from "lodash.debounce";
+import { putDocument } from "../../api/document";
 
 interface IEditor { 
   isContentEmpty: boolean;
-  setIsContentEmpty: (value: boolean) => void;
+  setIsContentEmpty: React.Dispatch<React.SetStateAction<boolean>>;
+  docTitle: string;
+  setDocTitle: React.Dispatch<React.SetStateAction<string>>;
+  isStackEditor?: boolean;
 }
 
 const Editor: React.FC<IEditor> = (props) => {
@@ -15,17 +20,22 @@ const Editor: React.FC<IEditor> = (props) => {
   const [lastUpdated] = useState("12:59 11/27/2024");
   const [dontShowToolBar, setDontShowToolBar] = useState(false);
   const location = useLocation();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const editorContentRef = useRef<any>(null);
+  const { documentUid } = useParams<{ documentUid: string }>();
 
+  console.log("isContentEmpty", props.isContentEmpty);
+
+  useEffect(() => {
+    setTitle(props.docTitle);
+  }, [props.docTitle]);
 
   useEffect(() => {
     const pathArray = location.pathname.split("/");
-
     const canRemove = pathArray.includes("stack-create-new-wave");
-
-    console.log("meet canRemove : ", canRemove);
     setDontShowToolBar(canRemove);
-    
   }, [location]);
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const checkIsContentEmpty = (content: any[]): boolean => {
     // If content is not an array or is empty, it's considered empty
@@ -46,18 +56,44 @@ const Editor: React.FC<IEditor> = (props) => {
     return content.every(checkNode);
   };
 
+  // Debounced content handler
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleDebouncedChange = debounce((content: any) => {
+    const docContent = {
+      title: typeof content === "string" ? content : title,
+      document: Array.isArray(content) ? content : editorContentRef.current,
+      author: "Meet Makwana",
+    };
+    const putPayload = {
+      content: JSON.stringify(docContent),
+    };
+    // alert("Debounced content change detected");
+    // makePutRequest(content);
+
+    putDocument(documentUid, putPayload)
+      .then((response) => {
+        console.log("Document updated successfully", response);
+        props.setDocTitle(response.title);
+      })
+      .catch((error) => {
+        console.error("Error in updating document", error);
+      });
+  }, 2000); // Adjust debounce delay as neededx
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleContentChange = (content: any) => {
     console.log("Editor content updated:", content);
-
     // setEditorContent(content);
     const isEmpty = checkIsContentEmpty(content);
     props.setIsContentEmpty(isEmpty);
+    editorContentRef.current = content;
+    handleDebouncedChange(content);
   };
 
-  const handleSlashCommand = (command: string) => {
-    alert(`Selected command: ${command}`);
-  };
+  const handleButtonClick = () => { 
+    console.log(`Button clicked: Add to Entry`);
+    alert(`Button clicked: here`);
+  }
 
   return (
     <div
@@ -70,11 +106,15 @@ const Editor: React.FC<IEditor> = (props) => {
           <input
             type="text"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => {
+              setTitle(e.target.value);
+              handleDebouncedChange(e.target.value);
+            }}
             placeholder="Untitled"
             className="editable-title"
             disabled={dontShowToolBar}
           />
+          <Button onClick={handleButtonClick()}>Add to Entry</Button>
         </div>
         <div className="author-details">
           <Icon icon="User" version="v2" size="small" />
@@ -88,7 +128,6 @@ const Editor: React.FC<IEditor> = (props) => {
 
       <JsonRTE
         onChange={handleContentChange}
-        onSlashCommand={handleSlashCommand}
         toolbarMode="advance"
         disabled={dontShowToolBar}
         // value={sample}

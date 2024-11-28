@@ -37,7 +37,7 @@ const Layout: React.FC<ILayout> = (props) => {
             exact
             path={`${props.microAppsObj.relativeUrl}/stack-create-new-wave`}
           >
-            <StackEditor />
+            <StackEditor isStackEditor={true} />
           </Route>
 
           <Route

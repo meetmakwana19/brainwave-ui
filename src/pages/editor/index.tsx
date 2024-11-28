@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom";
 import Editor from "./Editor";
 import { IMicroAppsObj } from "../../types/microAppObj";
 import CustomBigButton from "../home/CustomBigButton/CustomBigButton";
+import { isEmpty } from "../../common/utils/utils";
 
 interface ISelectedValue {
   label: string;
@@ -45,6 +46,8 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
   const history = useHistory();
   const [voiceProfiles, setVoiceProfiles] = useState<IBrandKit[]>([]); // State to store voice profiles
   const [selectedVoiceProfile, setSelectedVoiceProfile] = useState<string>("Pick Writing Style"); // Track selected VP
+  const [docTitle, setDocTitle] = useState("");
+
   // const [loading, setLoading] = useState<boolean>(false);
   const [isContentEmpty, setIsContentEmpty] = useState(true);
 
@@ -122,7 +125,7 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
           label: (
             <div className="editor-heading">
               <Truncate truncateFrom="end" maxChar={32}>
-                Untitled Wave
+                {isEmpty(docTitle) ? "Untitled Document" : docTitle}
               </Truncate>
             </div>
           ),
@@ -166,7 +169,7 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
   const content = {
     component: (
       <div>
-        <Editor isContentEmpty={isContentEmpty} setIsContentEmpty={setIsContentEmpty} />
+        <Editor isContentEmpty={isContentEmpty} setIsContentEmpty={setIsContentEmpty} docTitle={docTitle} setDocTitle={setDocTitle}/>
           <div className={`${isContentEmpty ? 'editor-bottom-button-container' : 'editor-bottom-button-container-closing'}`}>
             <CustomBigButton
               label="New Document"

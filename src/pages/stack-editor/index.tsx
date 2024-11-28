@@ -2,10 +2,10 @@ import React from "react";
 import Editor from "../editor/Editor";
 import './index.css'
 
-const StackEditor: React.FC= () => {
+const StackEditor: React.FC= (props) => {
   return (
     <div className='stack-editor-view'>
-      <Editor/>
+      <Editor isStackEditor={props.isStackEditor} />
     </div>
   );
 };
