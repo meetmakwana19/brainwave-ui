@@ -1,28 +1,38 @@
 import { Icon, JsonRTE } from "@contentstack/venus-components";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Editor.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 // import { sample } from "../../sample";
+import debounce from "lodash.debounce";
+import { putDocument } from "../../api/document";
 
-const Editor: React.FC = () => {
+interface IEditor {
+  docTitle: string;
+  setDocTitle: React.Dispatch<React.SetStateAction<string>>;
+}
+const Editor: React.FC<IEditor> = ({ docTitle, setDocTitle }) => {
   const [title, setTitle] = useState<string>("");
   const [author] = useState("Meet Makwana");
   const [lastUpdated] = useState("12:59 11/27/2024");
   const [dontShowToolBar, setDontShowToolBar] = useState(false);
   const location = useLocation();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const editorContentRef = useRef<any>(null);
   const [isContentEmpty, setIsContentEmpty] = useState(true);
+  const { documentUid } = useParams<{ documentUid: string }>();
 
-  console.log("isContentEmpty", isContentEmpty);  
+  console.log("isContentEmpty", isContentEmpty);
+
+  useEffect(() => {
+    setTitle(docTitle);
+  }, [docTitle]);
 
   useEffect(() => {
     const pathArray = location.pathname.split("/");
-
     const canRemove = pathArray.includes("stack-create-new-wave");
-
-    console.log("meet canRemove : ", canRemove);
     setDontShowToolBar(canRemove);
-
   }, [location]);
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const checkIsContentEmpty = (content: any[]): boolean => {
     // If content is not an array or is empty, it's considered empty
@@ -43,6 +53,30 @@ const Editor: React.FC = () => {
     return content.every(checkNode);
   };
 
+  // Debounced content handler
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleDebouncedChange = debounce((content: any) => {
+    const docContent = {
+      title: typeof content === "string" ? content : title,
+      document: Array.isArray(content) ? content : editorContentRef.current,
+      author: "Meet Makwana",
+    };
+    const putPayload = {
+      content: JSON.stringify(docContent),
+    };
+    // alert("Debounced content change detected");
+    // makePutRequest(content);
+
+    putDocument(documentUid, putPayload)
+      .then((response) => {
+        console.log("Document updated successfully", response);
+        setDocTitle(response.title);
+      })
+      .catch((error) => {
+        console.error("Error in updating document", error);
+      });
+  }, 2000); // Adjust debounce delay as neededx
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleContentChange = (content: any) => {
     console.log("Editor content updated:", content);
@@ -50,10 +84,9 @@ const Editor: React.FC = () => {
     // setEditorContent(content);
     const isEmpty = checkIsContentEmpty(content);
     setIsContentEmpty(isEmpty);
-  };
 
-  const handleSlashCommand = (command: string) => {
-    alert(`Selected command: ${command}`);
+    editorContentRef.current = content;
+    handleDebouncedChange(content);
   };
 
   return (
@@ -67,7 +100,10 @@ const Editor: React.FC = () => {
           <input
             type="text"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => {
+              setTitle(e.target.value);
+              handleDebouncedChange(e.target.value);
+            }}
             placeholder="Untitled"
             className="editable-title"
             disabled={dontShowToolBar}

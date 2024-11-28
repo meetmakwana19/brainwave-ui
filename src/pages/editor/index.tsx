@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import "./index.css";
 import { useHistory } from "react-router-dom";
 import Editor from "./Editor";
+import { isEmpty } from "../../common/utils/utils";
 
 interface ISelectedValue {
   label: string;
@@ -38,6 +39,8 @@ const EditorPage: React.FC = () => {
   const history = useHistory();
   const [voiceProfiles, setVoiceProfiles] = useState<IBrandKit[]>([]); // State to store voice profiles
   const [selectedVoiceProfile, setSelectedVoiceProfile] = useState<string>("Pick Writing Style"); // Track selected VP
+  const [docTitle, setDocTitle] = useState("");
+
   // const [loading, setLoading] = useState<boolean>(false);
 
   const voiceProfileList = async () => {
@@ -105,7 +108,7 @@ const EditorPage: React.FC = () => {
           label: (
             <div className="editor-heading">
               <Truncate truncateFrom="end" maxChar={32}>
-                Untitled Wave
+                {isEmpty(docTitle) ? "Untitled Document" : docTitle}
               </Truncate>
             </div>
           ),
@@ -149,7 +152,7 @@ const EditorPage: React.FC = () => {
   const content = {
     component: (
       <div>
-        <Editor />
+        <Editor docTitle={docTitle} setDocTitle={setDocTitle}/>
       </div>
     ),
   };
