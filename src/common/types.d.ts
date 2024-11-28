@@ -5,3 +5,8 @@ export interface TableItem {
   author: string;
   last_updated: string;
 }
+
+
+export interface Document {
+  content: string;
+}

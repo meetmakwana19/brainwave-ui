@@ -1,8 +1,4 @@
-import {
-  Icon,
-  LeftNavigation,
-  Tooltip,
-} from "@contentstack/venus-components";
+import { Icon, LeftNavigation, Tooltip } from "@contentstack/venus-components";
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { IMicroAppsObj } from "../../types/microAppObj";
@@ -10,6 +6,7 @@ import SharedWithMe from "./SharedWithMe";
 import "./Home.css";
 import DynamicTable from "./SexyDynamicTable/DynamicTable";
 import CustomBigButton from "./CustomBigButton/CustomBigButton";
+import { postDocument } from "../../api/document";
 
 interface IHomeProps {
   microAppsObj: IMicroAppsObj;
@@ -44,27 +41,36 @@ const Home: React.FC<IHomeProps> = (props) => {
 
   // Function to handle row click
   const handleRowClick = () => {
-    history.push(`${path}/create-new-wave`)
+    history.push(`${path}/create-new-wave`);
     // You can perform any action here, such as navigating or showing details
-    console.log('Row data:');
+    console.log("Row data:");
   };
 
   const handleButtonClick = (buttonName: string) => {
     console.log(`Button clicked: ${buttonName}`);
     alert(`Button clicked: ${buttonName}`);
-  }
+  };
   const handleNewDocumentButtonClick = () => {
-    history.push(`${path}/create-new-wave`)
-  }
+    const newDoc = {
+      content: '{"title":"","document":[],"author":"Meet Makwana"}',
+    };
+
+    postDocument(newDoc)
+      .then((response) => {
+        console.log("Document created successfully", response);
+      })
+      .catch((error) => {
+        console.error("Error in creating document", error);
+      });
+    history.push(`${path}/create-new-wave`);
+  };
 
   const navigationDataArray: INavigationData[] = [
     {
       component: <DynamicTable onRowClick={handleRowClick} />,
       default: navigationID === "recently-modified",
       headerData: {
-        actions: [
-
-        ],
+        actions: [],
         title: (
           <div className="brain-wave-table-header-wrapper">
             <div className="heading-for-table-text">Recent</div>
@@ -80,14 +86,12 @@ const Home: React.FC<IHomeProps> = (props) => {
                 icon={<Icon icon="Layout" version="v2" size="small" />}
                 onClick={() => handleButtonClick("Templates")}
                 isActive={true} /* Set to true if active */
-
               />
               <CustomBigButton
                 label="Import"
                 icon={<Icon icon="Download" version="v2" size="small" />}
                 onClick={() => handleButtonClick("Import")}
                 isActive={false} /* Set to true if active */
-
               />
             </div>
           </div>
