@@ -42,7 +42,6 @@ const Home: React.FC<IHomeProps> = (props) => {
 
   const handleButtonClick = (buttonName: string) => {
     console.log(`Button clicked: ${buttonName}`);
-    alert(`Button clicked: ${buttonName}`);
   };
   const handleNewDocumentButtonClick = async() => {
     const newDoc = {

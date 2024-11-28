@@ -1,5 +1,10 @@
 import { Document } from "../common/types";
 
+export const getSingleDocument = async (documentUid: string) => {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/documents/${documentUid}`);
+    return await response.json();
+}
+
 export const postDocument = async (document: Document) => {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/documents`, {
         method: "POST",
