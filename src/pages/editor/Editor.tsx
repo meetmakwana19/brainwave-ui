@@ -1,12 +1,25 @@
 import { Icon, JsonRTE } from "@contentstack/venus-components";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Editor.css";
+import { useLocation } from "react-router-dom";
 // import { sample } from "../../sample";
 
 const Editor: React.FC = () => {
   const [title, setTitle] = useState<string>("");
   const [author] = useState("Meet Makwana");
   const [lastUpdated] = useState("12:59 11/27/2024");
+  const [dontShowToolBar, setDontShowToolBar] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const pathArray = location.pathname.split("/");
+
+    const canRemove = pathArray.includes("stack-create-new-wave");
+
+    console.log("meet canRemove : ", canRemove);
+    setDontShowToolBar(canRemove);
+
+  }, [location]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleContentChange = (content: any) => {
@@ -20,7 +33,7 @@ const Editor: React.FC = () => {
   };
 
   return (
-    <div className="editor-section">
+    <div className={`editor-section ${dontShowToolBar ? "dont-show-rte-toolbar" : null}`}>
       <div className="sub-heading">
         <div className="title-input">
           <input
@@ -29,10 +42,11 @@ const Editor: React.FC = () => {
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Untitled"
             className="editable-title"
+            disabled={dontShowToolBar}
           />
         </div>
         <div className="author-details">
-          <Icon icon="User" version="v2" size="small"/>
+          <Icon icon="User" version="v2" size="small" />
           <p>{author}</p>
         </div>
         <div className="last-updated-details">
@@ -45,6 +59,7 @@ const Editor: React.FC = () => {
         onChange={handleContentChange}
         onSlashCommand={handleSlashCommand}
         toolbarMode="advance"
+        disabled={dontShowToolBar}
         // value={sample}
       />
     </div>

@@ -2,11 +2,27 @@
   display: none !important;
 }
 
+.dont-show-rte-toolbar #scrte-editor #scrte-toolbar {
+  display: none !important;
+}
+
 .sub-heading {
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.editor-section #scrte-editor #scrte-toolbar {
+  background-color: transparent;
+  border: none;
+}
+
+.editor-section #scrte-editor #scrte-toolbar .toolbar-parent {
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .editor-container {
@@ -16,6 +32,10 @@
 
 .title-input {
   margin-bottom: 8px;
+}
+
+.title-input input:disabled {
+  background-color: white;
 }
 
 .editable-title {
