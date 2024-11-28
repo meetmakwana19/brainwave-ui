@@ -57,7 +57,11 @@ const Editor: React.FC = () => {
   };
 
   return (
-    <div className={`editor-section ${dontShowToolBar ? "dont-show-rte-toolbar" : null}`}>
+    <div
+      className={`editor-section ${
+        dontShowToolBar ? "dont-show-rte-toolbar" : null
+      }`}
+    >
       <div className="sub-heading">
         <div className="title-input">
           <input
