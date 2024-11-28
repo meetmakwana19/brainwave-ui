@@ -11,7 +11,7 @@ interface IEditor {
   setIsContentEmpty: React.Dispatch<React.SetStateAction<boolean>>;
   docTitle: string;
   setDocTitle: React.Dispatch<React.SetStateAction<string>>;
-  isStackEditor?: boolean;
+  isStackEditor?: boolean
 }
 
 const Editor: React.FC<IEditor> = (props) => {
@@ -90,9 +90,9 @@ const Editor: React.FC<IEditor> = (props) => {
     handleDebouncedChange(content);
   };
 
-  const handleButtonClick = () => { 
-    console.log(`Button clicked: Add to Entry`);
-    alert(`Button clicked: here`);
+  const handleButtonClick = (buttonName: string) => { 
+    console.log(`Button clicked: ${buttonName}`);
+    alert(`Button clicked: ${buttonName}`);
   }
 
   return (
@@ -114,7 +114,7 @@ const Editor: React.FC<IEditor> = (props) => {
             className="editable-title"
             disabled={dontShowToolBar}
           />
-          <Button onClick={handleButtonClick()}>Add to Entry</Button>
+          {props.isStackEditor && <Button onClick={() => { handleButtonClick('saxu') }}>Add to Entry</Button>}
         </div>
         <div className="author-details">
           <Icon icon="User" version="v2" size="small" />
