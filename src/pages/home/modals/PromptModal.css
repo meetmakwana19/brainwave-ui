@@ -1,7 +1,21 @@
+/* Add this CSS for the loading dots animation */
+@keyframes dotAnimation {
+  0% {
+    content: "Generating.";
+  }
+  33% {
+    content: "Generating..";
+  }
+  66% {
+    content: "Generating...";
+  }
+  100% {
+    content: "Generating.";
+  }
+}
 .custom-gradient-button {
   display: flex;
   align-items: center;
-  justify-content: center;
   padding: 10px 20px;
   font-size: 16px;
   font-weight: 700;
@@ -17,6 +31,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow */
   transition: transform 0.2s, box-shadow 0.2s; /* Animation for hover */
   gap: 10px;
+  min-width: 10rem;
 }
 
 .custom-gradient-button:hover {
@@ -26,6 +41,15 @@
 
 .custom-gradient-button:active {
   transform: scale(0.95); /* Slightly shrink on click */
+}
+
+.custom-gradient-button-loading:after {
+  content: "Generating";
+  position: absolute;
+  font-size: 16px;
+  font-weight: 700;
+  animation: dotAnimation 1.5s infinite steps(1);
+  margin-left: 24px;
 }
 
 .button-container {

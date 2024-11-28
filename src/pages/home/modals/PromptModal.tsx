@@ -23,11 +23,13 @@ interface IPromptModal {
 }
 const PromptModal: React.FC<IPromptModal> = (props) => {
   const [prompt, setPrompt] = useState("");
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const microAppsObj = useSelector((state: RootState) => state.common.microAppsObj);
+  const microAppsObj = useSelector(
+    (state: RootState) => state.common.microAppsObj
+  );
 
   console.log("microAppsObj in modal ", microAppsObj);
-  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPrompt(e.target.value);
@@ -35,6 +37,7 @@ const PromptModal: React.FC<IPromptModal> = (props) => {
 
   const postTemplate = async () => {
     try {
+      setLoading(true);
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/generate-from-template`,
         {
@@ -80,11 +83,14 @@ const PromptModal: React.FC<IPromptModal> = (props) => {
 
       if (newDocId) {
         store.dispatch(updateTempDocUID(newDocId));
+        setLoading(false);
         if (props.closeModal) {
           props.closeModal(prompt);
         }
         // props.history.push(`${microAppsObj.relativeUrl}/wave-editor/${newDocId}`);
       } else {
+        setLoading(false);
+
         Notification({
           type: "error",
           notificationContent: {
@@ -94,6 +100,8 @@ const PromptModal: React.FC<IPromptModal> = (props) => {
         });
       }
     } catch (error) {
+      setLoading(false);
+
       console.error("Error in postTemplate", error);
     }
   };
@@ -122,13 +130,13 @@ const PromptModal: React.FC<IPromptModal> = (props) => {
       <ModalFooter>
         <ButtonGroup>
           <button
-            className="custom-gradient-button"
+            className={`custom-gradient-button ${loading ? "custom-gradient-button-loading" : ""}`}
             onClick={() => {
               postTemplate();
             }}
           >
             <AIIcon />
-            Generate
+            {loading ? "" : "\u00A0 Generate"}
           </button>
         </ButtonGroup>
       </ModalFooter>
