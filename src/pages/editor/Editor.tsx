@@ -121,7 +121,7 @@ const Editor: React.FC<IEditor> = (props) => {
             className="editable-title"
             disabled={dontShowToolBar}
           />
-          <Button onClick={handleButtonClick()}>Add to Entry</Button>
+          {props.isStackEditor && <Button onClick={() => { handleButtonClick('saxu') }}>Add to Entry</Button>}
         </div>
         <div className="author-details">
           <Icon icon="User" version="v2" size="small" />

@@ -3,31 +3,21 @@ import "./DynamicTable.css";
 import { Icon } from "@contentstack/venus-components";
 import { TableItem } from "../../../common/types";
 import { isEmpty } from "../../../common/utils/utils";
-import { IMicroAppsObj } from "../../../types/microAppObj";
-import { useHistory } from "react-router-dom";
 
 interface DynamicTableProps {
   data?: TableItem[];
   viewMode?: boolean;
-  microAppsObj: IMicroAppsObj;
+  onRowClick: (item: TableItem) => void; 
 }
 
 const DynamicTable: React.FC<DynamicTableProps> = ({
   data,
-  microAppsObj,
   viewMode,
+  onRowClick
 }) => {
   const [tableData, setTableData] = useState(data);
-  const history = useHistory();
-  const path = microAppsObj.relativeUrl;
 
   // Function to handle row click
-  const handleRowClick = (item: TableItem) => {
-
-    history.push(`${path}/wave-editor/${item.uid}`);
-    // You can perform any action here, such as navigating or showing details
-    console.log("Row data:", item);
-  };
 
   // Function to handle delete
   const handleDelete = (uid: string) => {
@@ -64,7 +54,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
             <tr
               key={item.uid}
               className="table-row"
-              onClick={() => handleRowClick(item)} // Trigger the onRowClick function
+              onClick={() => onRowClick(item)} // Trigger the onRowClick function
             >
               <td>{isEmpty(item.title) ? "Untitled" : item.title}</td>
               <td>{item.author}</td>

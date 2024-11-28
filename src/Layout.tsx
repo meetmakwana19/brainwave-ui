@@ -8,6 +8,7 @@ import StackApp from "./pages/stack-app";
 import { useHistory } from "react-router-dom";
 import StackEditor from "./pages/stack-editor";
 
+
 interface ILayout {
   microAppsObj: IMicroAppsObj;
 }

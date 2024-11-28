@@ -12,6 +12,7 @@ import "./Home.css";
 import DynamicTable from "./SexyDynamicTable/DynamicTable";
 import CustomBigButton from "./CustomBigButton/CustomBigButton";
 import { postDocument } from "../../api/document";
+import { TableItem } from "../../common/types";
 import { ModalProps } from "@contentstack/venus-components/build/components/Modal/Modal";
 import TemplateModal from "./modals/TemplateModal";
 
@@ -80,9 +81,17 @@ const Home: React.FC<IHomeProps> = (props) => {
     history.push(`${path}/wave-editor/${newDocId}`);
   };
 
+  const handleRowClick = (item: TableItem) => {
+
+    history.push(`${path}/wave-editor/${item.uid}`);
+    // You can perform any action here, such as navigating or showing details
+    console.log("Row data:", item);
+  };
+
+
   const navigationDataArray: INavigationData[] = [
     {
-      component: <DynamicTable microAppsObj={props.microAppsObj} />,
+      component: <DynamicTable data={[]} onRowClick={handleRowClick}/>,
       default: navigationID === "recently-modified",
       headerData: {
         actions: [],
