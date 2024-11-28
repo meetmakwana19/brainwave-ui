@@ -8,13 +8,18 @@ import "./TemplateModal.css";
 import templateImage from "./image.png"; // Import the uploaded image
 import { ModalProps } from "@contentstack/venus-components/build/components/Modal/Modal";
 import PromptModal from "./PromptModal";
+import { Provider } from "react-redux";
+import { store } from "../../../store";
 
 interface ITemplateModal {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   closeModal: ((data: any) => void) | undefined;
+  setChangePage: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const TemplateModal: React.FC<ITemplateModal> = (props) => {
+  const newSetChangePage = props.setChangePage;
+
   const [templates, setTemplates] = useState([
     {
       id: 1,
@@ -83,7 +88,13 @@ const TemplateModal: React.FC<ITemplateModal> = (props) => {
     cbModal({
       component: (props: ModalProps) => (
         <>
-          <PromptModal closeModal={props.onClose} {...props} />
+          <Provider store={store}>
+            <PromptModal
+              closeModal={props.onClose}
+              setChangePage={newSetChangePage}
+              {...props}
+            />
+          </Provider>
         </>
       ),
       modalProps: {

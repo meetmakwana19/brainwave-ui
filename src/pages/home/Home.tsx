@@ -16,6 +16,8 @@ import { getAllDocuments, postDocument } from "../../api/document";
 import { TableItem } from "../../common/types";
 import { ModalProps } from "@contentstack/venus-components/build/components/Modal/Modal";
 import TemplateModal from "./modals/TemplateModal";
+import { RootState, store } from "../../store";
+import { Provider, useSelector } from "react-redux";
 
 interface IHomeProps {
   microAppsObj: IMicroAppsObj;
@@ -45,9 +47,12 @@ interface RouteParams {
 
 const Home: React.FC<IHomeProps> = (props) => {
   const [documentData, setDocumentData] = useState<TableItem[]>([]);
+  const [changePage, setChangePage] = useState<boolean>(false);
   const path = props.microAppsObj.relativeUrl;
   const { navigationID } = useParams<RouteParams>();
   const history = useHistory();
+
+  const newDocId = useSelector((state: RootState) => state.common.tempDocUID);
 
   useEffect(() => {
     getAllDocuments().then((data) => {
@@ -55,13 +60,25 @@ const Home: React.FC<IHomeProps> = (props) => {
     });
   }, []);
 
+  useEffect(() => {
+    if (changePage) {
+      history.push(`${path}/wave-editor/${newDocId}`);
+    }
+  }, [changePage, newDocId, history, path]);
+
   const handleButtonClick = (buttonName: string) => {
     console.log(`Button clicked: ${buttonName}`);
 
     cbModal({
       component: (props: ModalProps) => (
         <>
-          <TemplateModal closeModal={props.onClose} {...props} />
+          <Provider store={store}>
+            <TemplateModal
+              closeModal={props.onClose}
+              setChangePage={setChangePage}
+              {...props}
+            />
+          </Provider>
         </>
       ),
       modalProps: {

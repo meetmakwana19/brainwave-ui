@@ -16,3 +16,7 @@ export const isEmpty = <T>(value: T[] | NonArrayTypes): boolean => {
       return true;
   }
 };
+
+export const generateSimpleUID = (): string => {
+  return Math.random().toString(36).substr(2, 16); // 16-character unique ID
+};
