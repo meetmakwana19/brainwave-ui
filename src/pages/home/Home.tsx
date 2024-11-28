@@ -2,6 +2,7 @@ import {
   cbModal,
   Icon,
   LeftNavigation,
+  Notification,
   Tooltip,
 } from "@contentstack/venus-components";
 import React, { useEffect, useState } from "react";
@@ -85,7 +86,17 @@ const Home: React.FC<IHomeProps> = (props) => {
         console.error("Error in creating document", error);
       });
 
-    history.push(`${path}/wave-editor/${newDocId}`);
+    if (newDocId) {
+      history.push(`${path}/wave-editor/${newDocId}`);
+    } else {
+      Notification({
+        type: "error",
+        notificationContent: {
+          text: "Navigation to the editor is skipped as 'uid' is unavailable.",
+        },
+        notificationProps: { hideProgressBar: true, autoClose: true },
+      });
+    }
   };
 
   const handleRowClick = (item: TableItem) => {
