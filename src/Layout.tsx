@@ -7,6 +7,7 @@ import EditorPage from "./pages/editor";
 import StackApp from "./pages/stack-app";
 import { useHistory } from "react-router-dom";
 import StackEditor from "./pages/stack-editor";
+import { TableItem } from "./common/types";
 
 
 interface ILayout {
@@ -17,10 +18,11 @@ interface ILayout {
 const Layout: React.FC<ILayout> = (props) => {
   const history = useHistory();
   
-  const handleRowClick = () => {
-    history.push(`${path}/stack-create-new-wave`)
+  const handleRowClick = (item: TableItem) => {
+    history.push(`${path}/stack-wave-editor/${item.uid}`);
     console.log(handleRowClick);
   };
+
   const path = props.microAppsObj.relativeUrl;
   
   return (
@@ -36,7 +38,7 @@ const Layout: React.FC<ILayout> = (props) => {
 
           <Route
             exact
-            path={`${props.microAppsObj.relativeUrl}/stack-create-new-wave`}
+            path={`${props.microAppsObj.relativeUrl}/stack-wave-editor/:documentUid`}
           >
             <StackEditor isStackEditor={true} />
           </Route>
