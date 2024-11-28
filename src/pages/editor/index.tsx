@@ -42,7 +42,6 @@ interface IEditorPage {
   microAppsObj: IMicroAppsObj;
 }
 
-
 const EditorPage: React.FC<IEditorPage> = (props) => {
   const path = props.microAppsObj.relativeUrl;
   const history = useHistory();
@@ -52,6 +51,7 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
   const [docTitle, setDocTitle] = useState("");
   const [docData, setDocData] = useState<TableItem>({} as TableItem);
   const { documentUid } = useParams<{ documentUid: string }>();
+  const [loading, setLoading] = useState<boolean>(true);
 
   // const [loading, setLoading] = useState<boolean>(false);
   const [isContentEmpty, setIsContentEmpty] = useState(true);
@@ -106,14 +106,17 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
   }, []);
 
   useEffect(() => {
+    setLoading(true);
     getSingleDocument(documentUid)
       .then((response) => {
         console.log("Document fetched successfully", response);
         setDocTitle(response.title);
         setDocData(response);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error in fetching document", error);
+        setLoading(false);
       });
   }, [documentUid]);
 
@@ -129,10 +132,10 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
 
   const handleButtonClick = (buttonName: string) => {
     console.log(`Button clicked: ${buttonName}`);
-  }
+  };
   const handleNewDocumentButtonClick = () => {
-    history.push(`${path}/create-new-wave`)
-  }
+    history.push(`${path}/create-new-wave`);
+  };
 
   const header = {
     component: (
@@ -185,33 +188,43 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
   };
 
   const content = {
-    component: (
+    component: loading ? (
+      <>Loading</>
+    ) : (
       <div>
-        <Editor isContentEmpty={isContentEmpty} setIsContentEmpty={setIsContentEmpty}
+        <Editor
+          isContentEmpty={isContentEmpty}
+          setIsContentEmpty={setIsContentEmpty}
           docTitle={docTitle}
           setDocTitle={setDocTitle}
           docData={docData}
         />
-          <div className={`${isContentEmpty ? 'editor-bottom-button-container' : 'editor-bottom-button-container-closing'}`}>
-            <CustomBigButton
-              label="New Document"
-              icon={<Icon icon="NewTab" version="v2" size="small" />}
-              onClick={() => handleNewDocumentButtonClick()}
-              isActive={true} /* Set to true if active */
-            />
-            <CustomBigButton
-              label="Templates"
-              icon={<Icon icon="Layout" version="v2" size="small" />}
-              onClick={() => handleButtonClick("Templates")}
-              isActive={true} /* Set to true if active */
-            />
-            <CustomBigButton
-              label="Import"
-              icon={<Icon icon="Download" version="v2" size="small" />}
-              onClick={() => handleButtonClick("Import")}
-              isActive={false} /* Set to true if active */
-            />
-          </div>
+        <div
+          className={`${
+            isContentEmpty
+              ? "editor-bottom-button-container"
+              : "editor-bottom-button-container-closing"
+          }`}
+        >
+          <CustomBigButton
+            label="New Document"
+            icon={<Icon icon="NewTab" version="v2" size="small" />}
+            onClick={() => handleNewDocumentButtonClick()}
+            isActive={true} /* Set to true if active */
+          />
+          <CustomBigButton
+            label="Templates"
+            icon={<Icon icon="Layout" version="v2" size="small" />}
+            onClick={() => handleButtonClick("Templates")}
+            isActive={true} /* Set to true if active */
+          />
+          <CustomBigButton
+            label="Import"
+            icon={<Icon icon="Download" version="v2" size="small" />}
+            onClick={() => handleButtonClick("Import")}
+            isActive={false} /* Set to true if active */
+          />
+        </div>
       </div>
     ),
   };
@@ -226,8 +239,8 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
         type="edit"
         header={header}
         content={content}
-      // rightSidebar={rightNav}
-      // footer={pageFooter}
+        // rightSidebar={rightNav}
+        // footer={pageFooter}
       />{" "}
     </div>
   );
