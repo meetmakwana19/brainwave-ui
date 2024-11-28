@@ -122,7 +122,7 @@ const Editor: React.FC<IEditor> = (props) => {
             disabled={dontShowToolBar}
           />
           {/* {props.isStackEditor && <Button onClick={() => { handleButtonClick() }}>Add to Entry</Button>} */}
-          <Button onClick={() => { handleButtonClick() }}>Add to Entry</Button>
+          {props.isStackEditor && <Button onClick={() => { () => { handleButtonClick('saxu') } }}>Add to Entry</Button>}
         </div>
         <div className="author-details">
           <Icon icon="User" version="v2" size="small" />
