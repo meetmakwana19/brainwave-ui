@@ -27,10 +27,13 @@
 
 .dropdown-label{
   padding: 0.5rem;
-  color: #6c5ce7 !important;
+  /* color: #6c5ce7 !important; */
   padding: 0.5rem !important;
   font-size: 15px !important;
   font-weight: 600 !important;
+}
+.dropdown-label:hover{
+  color: #6c5ce7 !important;
 }
 
 .editor-page-layout .PageTitleWrapper {

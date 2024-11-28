@@ -106,7 +106,7 @@ const EditorPage: React.FC = () => {
                   highlightActive={true}
                   withSearch={true}
                   closeAfterSelect={true}
-                  onChange={(selectedProfileUid: string) => handleVoiceProfileChange(selectedProfileUid)} // Pass the function reference
+                  onChange={(selectedProfileUid: ISelectedValue) => handleVoiceProfileChange(selectedProfileUid)} // Pass the function reference
                   // loading={loading} // Show loading state
                 >
                   <Icon icon="BrandKitLogo" version="v2" size="medium" />
