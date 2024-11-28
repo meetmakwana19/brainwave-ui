@@ -39,7 +39,7 @@ const Editor: React.FC<IEditor> = (props) => {
 
   useEffect(() => {
     const pathArray = location.pathname.split("/");
-    const canRemove = pathArray.includes("stack-create-new-wave");
+    const canRemove = pathArray.includes("stack-wave-editor");
     setDontShowToolBar(canRemove);
   }, [location]);
 
