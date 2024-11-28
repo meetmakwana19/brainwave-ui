@@ -5,6 +5,9 @@ import { createBrowserHistory, History, LocationState } from "history";
 import { IMicroAppsObj } from "./types/microAppObj.ts";
 import { ErrorBoundary } from "./common/components/ErrorBoundary/index.tsx";
 import { Router } from 'react-router-dom';
+import { Provider } from "react-redux";
+import { store } from "./store/index.ts";
+import { updateMicroAppObj } from "./store/slice/commonSlice.ts";
 
 declare global {
   interface Window {
@@ -87,14 +90,16 @@ window.renderBrandKit = (
     ],
   }
 ) => {
+  store.dispatch(updateMicroAppObj(microAppsObj));
+
   // ReactDOM.createRoot(document.getElementById(containerId)!).render(
   ReactDOM.render(
     <ErrorBoundary>
-      {/* <Provider store={store}> */}
+      <Provider store={store}>
       <Router history={history}>
         <App microAppsObj={microAppsObj} />
       </Router>
-      {/* </Provider> */}
+      </Provider>
     </ErrorBoundary>,
     document.getElementById(containerId)
   );
