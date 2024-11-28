@@ -8,11 +8,13 @@ import {
 } from "@contentstack/venus-components";
 import React, { useEffect, useState } from "react";
 import "./index.css";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import Editor from "./Editor";
 import { IMicroAppsObj } from "../../types/microAppObj";
 import CustomBigButton from "../home/CustomBigButton/CustomBigButton";
 import { isEmpty } from "../../common/utils/utils";
+import { getSingleDocument } from "../../api/document";
+import { TableItem } from "../../common/types";
 
 interface ISelectedValue {
   label: string;
@@ -45,8 +47,11 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
   const path = props.microAppsObj.relativeUrl;
   const history = useHistory();
   const [voiceProfiles, setVoiceProfiles] = useState<IBrandKit[]>([]); // State to store voice profiles
-  const [selectedVoiceProfile, setSelectedVoiceProfile] = useState<string>("Pick Writing Style"); // Track selected VP
+  const [selectedVoiceProfile, setSelectedVoiceProfile] =
+    useState<string>("Pick Writing Style"); // Track selected VP
   const [docTitle, setDocTitle] = useState("");
+  const [docData, setDocData] = useState<TableItem>({} as TableItem);
+  const { documentUid } = useParams<{ documentUid: string }>();
 
   // const [loading, setLoading] = useState<boolean>(false);
   const [isContentEmpty, setIsContentEmpty] = useState(true);
@@ -56,14 +61,14 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
       "https://brand-kits-api.contentstack.com/v1/brand-kits/cs1bbc192ae13e41/voice-profiles?skip=0&limit=30&include_users=true&include_count=true&typeahead=&sort=updated_at&order=desc";
 
     const headers = {
-      "Accept": "*/*",
+      Accept: "*/*",
       "Accept-Language": "en-GB,en;q=0.8",
-      "authtoken": "blt20e8ed4a4abe1972",
+      authtoken: "blt20e8ed4a4abe1972",
       "If-None-Match": 'W/"398-B2Lmck5opfJd4gkqpCLDBiBjAj8"',
-      "organization_uid": "blt168737f46cfa411f",
-      "Origin": "https://app.contentstack.com",
-      "Priority": "u=1, i",
-      "Referer": "https://app.contentstack.com/",
+      organization_uid: "blt168737f46cfa411f",
+      Origin: "https://app.contentstack.com",
+      Priority: "u=1, i",
+      Referer: "https://app.contentstack.com/",
       "sec-ch-ua": '"Chromium";v="130", "Brave";v="130", "Not?A_Brand";v="99"',
       "sec-ch-ua-mobile": "?0",
       "sec-ch-ua-platform": '"macOS"',
@@ -100,11 +105,23 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
     voiceProfileList();
   }, []);
 
+  useEffect(() => {
+    getSingleDocument(documentUid)
+      .then((response) => {
+        console.log("Document fetched successfully", response);
+        setDocTitle(response.title);
+        setDocData(response);
+      })
+      .catch((error) => {
+        console.error("Error in fetching document", error);
+      });
+  }, [documentUid]);
+
   const handleVoiceProfileChange = (selectedValue: ISelectedValue) => {
     // const selectedProfile = voiceProfiles.find(
     //   (profile) => profile.uid === selectedValue
     // );
-    const selectedVoiceProfile = selectedValue.label
+    const selectedVoiceProfile = selectedValue.label;
     setSelectedVoiceProfile(selectedVoiceProfile || "Pick Writing Style");
     console.log("Selected Voice Profile:", selectedValue);
     console.log("isContentEmpty", isContentEmpty);
@@ -145,8 +162,10 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
                   highlightActive={true}
                   withSearch={true}
                   closeAfterSelect={true}
-                  onChange={(selectedProfileUid: ISelectedValue) => handleVoiceProfileChange(selectedProfileUid)} // Pass the function reference
-                // loading={loading} // Show loading state
+                  onChange={(selectedProfileUid: ISelectedValue) =>
+                    handleVoiceProfileChange(selectedProfileUid)
+                  } // Pass the function reference
+                  // loading={loading} // Show loading state
                 >
                   <Icon icon="BrandKitLogo" version="v2" size="medium" />
                   <div className="dropdown-label">{selectedVoiceProfile}</div>
@@ -169,7 +188,11 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
   const content = {
     component: (
       <div>
-        <Editor isContentEmpty={isContentEmpty} setIsContentEmpty={setIsContentEmpty} docTitle={docTitle} setDocTitle={setDocTitle}/>
+        <Editor isContentEmpty={isContentEmpty} setIsContentEmpty={setIsContentEmpty}
+          docTitle={docTitle}
+          setDocTitle={setDocTitle}
+          docData={docData}
+        />
           <div className={`${isContentEmpty ? 'editor-bottom-button-container' : 'editor-bottom-button-container-closing'}`}>
             <CustomBigButton
               label="New Document"

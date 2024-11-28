@@ -5,6 +5,7 @@ import { useLocation, useParams } from "react-router-dom";
 // import { sample } from "../../sample";
 import debounce from "lodash.debounce";
 import { putDocument } from "../../api/document";
+import { TableItem } from "../../common/types";
 
 interface IEditor { 
   isContentEmpty: boolean;
@@ -12,12 +13,13 @@ interface IEditor {
   docTitle: string;
   setDocTitle: React.Dispatch<React.SetStateAction<string>>;
   isStackEditor?: boolean;
+  docData: TableItem;
 }
 
 const Editor: React.FC<IEditor> = (props) => {
   const [title, setTitle] = useState<string>("");
-  const [author] = useState("Meet Makwana");
-  const [lastUpdated] = useState("12:59 11/27/2024");
+  const [author, setAuthor] = useState("Meet Makwana");
+  const [lastUpdated, setLastUpdated] = useState("12:59 11/27/2024");
   const [dontShowToolBar, setDontShowToolBar] = useState(false);
   const location = useLocation();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -29,6 +31,12 @@ const Editor: React.FC<IEditor> = (props) => {
   useEffect(() => {
     setTitle(props.docTitle);
   }, [props.docTitle]);
+
+  useEffect(() => {
+    editorContentRef.current = props.docData?.document;
+    setAuthor(props.docData?.author);
+    setLastUpdated(props.docData?.last_updated);
+  }, [props.docData]);
 
   useEffect(() => {
     const pathArray = location.pathname.split("/");
@@ -126,12 +134,20 @@ const Editor: React.FC<IEditor> = (props) => {
         </div>
       </div>
 
-      <JsonRTE
-        onChange={handleContentChange}
-        toolbarMode="advance"
-        disabled={dontShowToolBar}
-        // value={sample}
-      />
+      {editorContentRef.current ? (
+        <JsonRTE
+          onChange={handleContentChange}
+          toolbarMode="advance"
+          disabled={dontShowToolBar}
+          value={editorContentRef.current}
+        />
+      ) : (
+        <JsonRTE
+          onChange={handleContentChange}
+          toolbarMode="advance"
+          disabled={dontShowToolBar}
+        />
+      )}
     </div>
   );
 };
