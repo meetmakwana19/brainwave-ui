@@ -10,6 +10,9 @@ const Editor: React.FC = () => {
   const [lastUpdated] = useState("12:59 11/27/2024");
   const [dontShowToolBar, setDontShowToolBar] = useState(false);
   const location = useLocation();
+  const [isContentEmpty, setIsContentEmpty] = useState(true);
+
+  console.log("isContentEmpty", isContentEmpty);  
 
   useEffect(() => {
     const pathArray = location.pathname.split("/");
@@ -20,12 +23,33 @@ const Editor: React.FC = () => {
     setDontShowToolBar(canRemove);
 
   }, [location]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const checkIsContentEmpty = (content: any[]): boolean => {
+    // If content is not an array or is empty, it's considered empty
+    if (!Array.isArray(content) || content.length === 0) {
+      return true;
+    }
+
+    // Recursively check all children for non-empty text
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const checkNode = (node: any): boolean => {
+      if (node?.children?.length > 0) {
+        return node.children.every(checkNode);
+      }
+      return !node.text?.trim(); // Text is empty or only whitespace
+    };
+
+    // Check all top-level nodes
+    return content.every(checkNode);
+  };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleContentChange = (content: any) => {
     console.log("Editor content updated:", content);
 
     // setEditorContent(content);
+    const isEmpty = checkIsContentEmpty(content);
+    setIsContentEmpty(isEmpty);
   };
 
   const handleSlashCommand = (command: string) => {
