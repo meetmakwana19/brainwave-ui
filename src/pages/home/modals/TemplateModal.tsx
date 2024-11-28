@@ -40,35 +40,29 @@ const TemplateModal: React.FC<ITemplateModal> = (props) => {
       description:
         "Keeps a record of discussions, decisions, and outcomes from meetings.",
     },
-    {
-      id: 6,
-      title: "Daily Scrum Meeting",
-      description:
-        "Provides quick updates and task progress for agile development teams.",
-    },
   ]);
 
-  const fetchTemplates = async () => {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/templates`);
-      const data = await response.json();
-      console.log(data);
-
-      // Assuming that the data structure from the response is similar to the one you provided
-      const newTemplate = {
-        id: 7, // Unique id for the new template, you may want to adjust this if needed
-        title: data[0]?.content_type?.title || "New Template", // Title from the fetched data
-        description:
-          data[0]?.content_type?.description || "New Template Description", // Description from the fetched data
-      };
-
-      setTemplates([newTemplate, ...templates]);
-    } catch (error) {
-      console.error("Error fetching templates:", error);
-    }
-  };
-
   useEffect(() => {
+    const fetchTemplates = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/templates`);
+        const data = await response.json();
+        console.log(data);
+
+        // Assuming that the data structure from the response is similar to the one you provided
+        const newTemplate = {
+          id: 7, // Unique id for the new template, you may want to adjust this if needed
+          title: data[0]?.content_type?.title || "New Template", // Title from the fetched data
+          description:
+            data[0]?.content_type?.description || "New Template Description", // Description from the fetched data
+        };
+
+        setTemplates((prevTemplates) => [newTemplate, ...prevTemplates]);
+      } catch (error) {
+        console.error("Error fetching templates:", error);
+      }
+    };
+
     fetchTemplates();
   }, []);
 
