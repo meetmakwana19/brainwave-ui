@@ -43,19 +43,23 @@ const Home: React.FC<IHomeProps> = (props) => {
     console.log(`Button clicked: ${buttonName}`);
     alert(`Button clicked: ${buttonName}`);
   };
-  const handleNewDocumentButtonClick = () => {
+  const handleNewDocumentButtonClick = async() => {
     const newDoc = {
       content: '{"title":"","document":[],"author":"Meet Makwana"}',
     };
 
-    postDocument(newDoc)
+    let newDocId = 0;
+
+    await postDocument(newDoc)
       .then((response) => {
         console.log("Document created successfully", response);
+        newDocId = response.uid;
       })
       .catch((error) => {
         console.error("Error in creating document", error);
       });
-    history.push(`${path}/wave-editor`);
+
+    history.push(`${path}/wave-editor/${newDocId}`);
   };
 
   const navigationDataArray: INavigationData[] = [
