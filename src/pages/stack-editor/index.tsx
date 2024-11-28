@@ -1,11 +1,11 @@
 import React from "react";
-import EditorPage from "../editor/Editor";
+import Editor from "../editor/Editor";
 import './index.css'
 
-const StackEditor: React.FC<IStackApp> = () => {
+const StackEditor: React.FC= () => {
   return (
     <div className='stack-editor-view'>
-      <EditorPage />
+      <Editor/>
     </div>
   );
 };

@@ -44,7 +44,7 @@ const Layout: React.FC<ILayout> = (props) => {
             exact
             path={`${props.microAppsObj.relativeUrl}/wave-editor/:documentUid`}
           >
-            <EditorPage />
+            <EditorPage microAppsObj={props.microAppsObj} />
           </Route>
 
           <Route exact path={["/", "/brainwave", "/brainwave/:navigationID"]}>
