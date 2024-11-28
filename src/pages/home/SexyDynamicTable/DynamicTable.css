@@ -31,7 +31,7 @@
 }
 
 .dynamic-table th:first-child {
-  width: 675px;
+  width: 600px;
 }
 
 .dynamic-table td {
@@ -56,7 +56,7 @@
 .actions {
   display: flex;
   gap: 10px;
-  margin-right: 5rem;
+  /* margin-right: 5rem; */
 }
 
 .action-button {

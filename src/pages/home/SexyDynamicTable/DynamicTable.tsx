@@ -3,17 +3,18 @@ import "./DynamicTable.css";
 import { Icon } from "@contentstack/venus-components";
 import { TableItem } from "../../../common/types";
 import { isEmpty } from "../../../common/utils/utils";
+import { parseISO, formatDistanceToNow } from "date-fns";
 
 interface DynamicTableProps {
   data?: TableItem[];
   viewMode?: boolean;
-  onRowClick: (item: TableItem) => void; 
+  onRowClick: (item: TableItem) => void;
 }
 
 const DynamicTable: React.FC<DynamicTableProps> = ({
   data,
   viewMode,
-  onRowClick
+  onRowClick,
 }) => {
   const [tableData, setTableData] = useState(data);
 
@@ -38,6 +39,13 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
     setTableData(data);
   };
 
+  // Helper function to convert `last_updated` to relative time
+  const getRelativeTime = (dateString: string) => {
+    if (!dateString) return "Unknown"; // Handle empty or invalid dates
+    const parsedDate = parseISO(dateString); // Convert string to Date object
+    return formatDistanceToNow(parsedDate, { addSuffix: true }); // Get relative time
+  };
+
   return (
     <div className="table-container">
       <table className="dynamic-table">
@@ -58,7 +66,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
             >
               <td>{isEmpty(item.title) ? "Untitled" : item.title}</td>
               <td>{item.author}</td>
-              <td>{item.last_updated}</td>
+              <td>{getRelativeTime(item.last_updated)}</td>
               {viewMode ? null : (
                 <td className="actions">
                   <button
