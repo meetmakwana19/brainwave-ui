@@ -1,4 +1,9 @@
-import { Icon, LeftNavigation, Tooltip } from "@contentstack/venus-components";
+import {
+  cbModal,
+  Icon,
+  LeftNavigation,
+  Tooltip,
+} from "@contentstack/venus-components";
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { IMicroAppsObj } from "../../types/microAppObj";
@@ -7,6 +12,8 @@ import "./Home.css";
 import DynamicTable from "./SexyDynamicTable/DynamicTable";
 import CustomBigButton from "./CustomBigButton/CustomBigButton";
 import { postDocument } from "../../api/document";
+import { ModalProps } from "@contentstack/venus-components/build/components/Modal/Modal";
+import TemplateModal from "./modals/TemplateModal";
 
 interface IHomeProps {
   microAppsObj: IMicroAppsObj;
@@ -41,8 +48,20 @@ const Home: React.FC<IHomeProps> = (props) => {
 
   const handleButtonClick = (buttonName: string) => {
     console.log(`Button clicked: ${buttonName}`);
+
+    cbModal({
+      component: (props: ModalProps) => (
+        <>
+          <TemplateModal closeModal={props.onClose} {...props} />
+        </>
+      ),
+      modalProps: {
+        size: "small",
+        customClass: "template-modal",
+      },
+    });
   };
-  const handleNewDocumentButtonClick = async() => {
+  const handleNewDocumentButtonClick = async () => {
     const newDoc = {
       content: '{"title":"","document":[],"author":"Meet Makwana"}',
     };
