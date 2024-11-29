@@ -5,11 +5,11 @@ import {
 } from "@contentstack/venus-components";
 import React, { useEffect, useState } from "react";
 import "./TemplateModal.css";
-import templateImage from "./image.png"; // Import the uploaded image
 import { ModalProps } from "@contentstack/venus-components/build/components/Modal/Modal";
 import PromptModal from "./PromptModal";
 import { Provider } from "react-redux";
 import { store } from "../../../store";
+import DocIcon from "./DocIcon";
 
 interface ITemplateModal {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -118,11 +118,12 @@ const TemplateModal: React.FC<ITemplateModal> = (props) => {
               className="template-tile"
               onClick={handleTemplateClick}
             >
-              <img
+              {/* <img
                 src={templateImage}
                 alt="Template"
                 className="template-image"
-              />
+              /> */}
+              <DocIcon />
               <div className="template-title">{template.title}</div>
               <div className="template-description">{template.description}</div>
             </div>
