@@ -72,3 +72,28 @@
   line-height: 16px;
   opacity: 0.8;
 }
+
+/* Add this CSS for the loading dots animation */
+@keyframes dotAnimation2 {
+  0% {
+    content: "Adding.";
+  }
+  33% {
+    content: "Adding..";
+  }
+  66% {
+    content: "Adding...";
+  }
+  100% {
+    content: "Adding.";
+  }
+}
+
+.editor-section .custom-gradient-button-loading:after {
+  content: "Adding";
+  position: absolute;
+  font-size: 16px;
+  font-weight: 700;
+  animation: dotAnimation2 1.5s infinite steps(1);
+  margin-left: 24px;
+}

@@ -8,6 +8,7 @@ import { putDocument } from "../../api/document";
 import { TableItem } from "../../common/types";
 import { formatDate, isEmpty } from "../../common/utils/utils";
 import { mappingData } from "./data";
+import AIIcon from "../../common/components/AIIcon";
 
 interface IEditor {
   isContentEmpty: boolean;
@@ -27,6 +28,7 @@ const Editor: React.FC<IEditor> = (props) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const editorContentRef = useRef<any>([]);
   const { documentUid } = useParams<{ documentUid: string }>();
+  const [mappingLoader, setMappingLoader] = useState<boolean>(false);
 
   console.log("isStackEditor --- ", props.isStackEditor);
 
@@ -122,7 +124,10 @@ const Editor: React.FC<IEditor> = (props) => {
   };
 
   const handleButtonClick = () => {
-    console.log(`Button clicked: Add to Entry`);
+    setMappingLoader(true); // Set mappingLoader to true
+    setTimeout(() => {
+      setMappingLoader(false); // Set it back to false after 5 seconds
+    }, 2500);
   };
 
   return (
@@ -145,7 +150,15 @@ const Editor: React.FC<IEditor> = (props) => {
             disabled={dontShowToolBar}
           />
           {props.isStackEditor && (
-            <Button onClick={() => handleButtonClick()}>Add to Entry</Button>
+            <Button
+              className={`custom-gradient-button ${
+                mappingLoader ? "custom-gradient-button-loading" : ""
+              }`}
+              onClick={() => handleButtonClick()}
+            >
+              <AIIcon />
+              {mappingLoader ? "" : "Add to Entry"}
+            </Button>
           )}
         </div>
         <div className="author-details">
