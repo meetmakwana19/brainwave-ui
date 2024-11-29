@@ -97,3 +97,12 @@
   animation: dotAnimation2 1.5s infinite steps(1);
   margin-left: 24px;
 }
+
+.title-input-stack-view {
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  gap: 18px;
+}
