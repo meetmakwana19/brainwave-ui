@@ -140,7 +140,7 @@ const Editor: React.FC<IEditor> = (props) => {
         <div className="title-input">
           <input
             type="text"
-            value={title}
+            value={title.length > 15 ? `${title.slice(0, 15)}...` : title} // Truncate if more than 35 chars
             onChange={(e) => {
               setTitle(e.target.value);
               handleDebouncedChange(e.target.value);
