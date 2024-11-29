@@ -62,7 +62,7 @@ const Editor: React.FC<IEditor> = (props) => {
 
   useEffect(() => {
     if (props.isStackEditor) {
-      sendDataToParent();
+      // sendDataToParent();
       console.log("saving : ", editorContentRef.current);
     }
   }, [props.isStackEditor]);
@@ -124,6 +124,9 @@ const Editor: React.FC<IEditor> = (props) => {
   };
 
   const handleButtonClick = () => {
+
+    sendDataToParent();
+
     setMappingLoader(true); // Set mappingLoader to true
     setTimeout(() => {
       setMappingLoader(false); // Set it back to false after 5 seconds
