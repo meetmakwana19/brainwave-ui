@@ -13,6 +13,7 @@
     "@contentstack/venus-components": "github:contentstack/venus-components#brainwave",
     "@reduxjs/toolkit": "^2.2.1",
     "date-fns": "^4.1.0",
+    "js-cookie": "^3.0.5",
     "lodash.debounce": "^4.0.8",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",

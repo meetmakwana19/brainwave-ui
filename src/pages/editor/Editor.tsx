@@ -7,6 +7,7 @@ import debounce from "lodash.debounce";
 import { putDocument } from "../../api/document";
 import { TableItem } from "../../common/types";
 import { formatDate, isEmpty } from "../../common/utils/utils";
+import { mappingData } from "./data";
 
 interface IEditor {
   isContentEmpty: boolean;
@@ -27,6 +28,8 @@ const Editor: React.FC<IEditor> = (props) => {
   const editorContentRef = useRef<any>([]);
   const { documentUid } = useParams<{ documentUid: string }>();
 
+  console.log("isStackEditor --- ", props.isStackEditor);
+
   useEffect(() => {
     setTitle(props.docTitle);
   }, [props.docTitle]);
@@ -42,6 +45,25 @@ const Editor: React.FC<IEditor> = (props) => {
     const canRemove = pathArray.includes("stack-wave-editor");
     setDontShowToolBar(canRemove);
   }, [location]);
+
+  const sendDataToParent = () => {
+    // Send data to the parent via postMessage
+    window.parent.postMessage(
+      {
+        type: "SET_DATA",
+        payload: mappingData.entry,
+      },
+      "https://localhost:8081" // Parent origin
+    );
+    console.log("meeti sent");
+  };
+
+  useEffect(() => {
+    if (props.isStackEditor) {
+      sendDataToParent();
+      console.log("saving : ", editorContentRef.current);
+    }
+  }, [props.isStackEditor]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const checkIsContentEmpty = (content: any[]): boolean => {
