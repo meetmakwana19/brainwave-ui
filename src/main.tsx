@@ -11,7 +11,7 @@ import { updateMicroAppObj } from "./store/slice/commonSlice.ts";
 
 declare global {
   interface Window {
-    renderBrandKit: (
+    renderBrainwave: (
       containerId?: string,
       // histroy?: History,
       history?: History<LocationState>, // typing it as `any` makes the history prop work on the Router component.
@@ -20,7 +20,7 @@ declare global {
   }
 }
 
-window.renderBrandKit = (
+window.renderBrainwave = (
   containerId = "root",
   history = createBrowserHistory(),
   microAppsObj = {
@@ -90,6 +90,8 @@ window.renderBrandKit = (
     ],
   }
 ) => {
+  console.log('hello brainwave');
+  
   store.dispatch(updateMicroAppObj(microAppsObj));
 
   // ReactDOM.createRoot(document.getElementById(containerId)!).render(

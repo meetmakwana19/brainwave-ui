@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
+    
   },
   "dependencies": {
     "@contentstack/venus-components": "github:contentstack/venus-components#brainwave",
@@ -19,11 +20,15 @@
     "react-dom": "^16.14.0",
     "react-redux": "^7.2.9",
     "react-router-dom": "^5.3.4",
-    "redux": "^5.0.1"
+    "redux": "^5.0.1",
+    "vite-plugin-commonjs": "^0.10.4",
+    "vite-plugin-css-injected-by-js": "^3.5.2",
+    "vite-plugin-node-stdlib-browser": "^0.2.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
     "@types/lodash.debounce": "^4.0.9",
+    "@types/node": "^22.10.1",
     "@types/react": "^16.14.60",
     "@types/react-dom": "^16.9.24",
     "@types/react-router-dom": "^5.3.3",
