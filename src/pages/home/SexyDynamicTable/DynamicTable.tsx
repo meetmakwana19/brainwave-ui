@@ -4,7 +4,7 @@ import { Icon, Notification, Truncate } from "@contentstack/venus-components";
 import { TableItem } from "../../../common/types";
 import { isEmpty } from "../../../common/utils/utils";
 import { parseISO, formatDistanceToNow } from "date-fns";
-import { deleteDocument } from "../../../api/document";
+import { deleteDocument, getAllDocuments } from "../../../api/document";
 
 interface DynamicTableProps {
   data?: TableItem[];
@@ -38,7 +38,13 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
           notificationProps: { hideProgressBar: true, autoClose: true },
         });
 
-        await fetchDocuments();
+        await getAllDocuments()
+          .then((data) => {
+            setTableData(data);
+          })
+          .catch((error) => {
+            throw error;
+          });
 
         setDeleting(false);
       })
@@ -56,17 +62,18 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
   };
 
   useEffect(() => {
-    fetchDocuments();
-  }, []);
-
-  const fetchDocuments = async () => {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/documents`);
-
-    const data = await response.json();
-
-    console.log("data is ", data);
+    // fetchDocuments();
     setTableData(data);
-  };
+  }, [data]);
+
+  // const fetchDocuments = async () => {
+  //   const response = await fetch(`${import.meta.env.VITE_API_URL}/documents`);
+
+  //   const data = await response.json();
+
+  //   console.log("data is ", data);
+  //   setTableData(data);
+  // };
 
   // Helper function to convert `last_updated` to relative time
   const getRelativeTime = (dateString: string) => {

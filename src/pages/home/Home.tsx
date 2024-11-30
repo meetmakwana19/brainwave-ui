@@ -51,12 +51,19 @@ const Home: React.FC<IHomeProps> = (props) => {
   const path = props.microAppsObj.relativeUrl;
   const { navigationID } = useParams<RouteParams>();
   const history = useHistory();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const newDocId = useSelector((state: RootState) => state.common.tempDocUID);
 
   useEffect(() => {
+    setLoading(true);
     getAllDocuments().then((data) => {
       setDocumentData(data);
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.error("Error in fetching documents", error);
+      setLoading(false);
     });
   }, []);
 
@@ -122,10 +129,17 @@ const Home: React.FC<IHomeProps> = (props) => {
   };
 
   const navigationDataArray: INavigationData[] = [
-    {
-      component: (
+  {
+    component: (
+      loading ? (
+        <div className="brainwave-spin-loader">
+          <div className="loader"></div>
+          <h1>Please wait</h1>
+        </div>
+      ) : (
         <DynamicTable data={documentData} onRowClick={handleRowClick} />
-      ),
+      )
+    ),
       default: navigationID === "recently-modified",
       headerData: {
         actions: [],

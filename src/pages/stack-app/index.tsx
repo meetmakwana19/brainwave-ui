@@ -10,21 +10,36 @@ interface IStackApp {
 
 const StackApp: React.FC<IStackApp> = (props: IStackApp) => {
   const [documentData, setDocumentData] = useState<TableItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    getAllDocuments().then((data) => {
-      setDocumentData(data);
-    });
+    setLoading(true);
+    getAllDocuments()
+      .then((data) => {
+        setDocumentData(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error in fetching documents", error);
+        setLoading(false);
+      });
   }, []);
 
   return (
-    <div>
-      <DynamicTable
-        data={documentData}
-        onRowClick={props.onRowClick}
-        viewMode={props.viewMode}
-      />
-    </div>
+    loading ? (
+      <div className="brainwave-spin-loader">
+        <div className="loader"></div>
+        <h1>Please wait</h1>
+      </div>
+    ) : (
+      <div>
+        <DynamicTable
+          data={documentData}
+          onRowClick={props.onRowClick}
+          viewMode={props.viewMode}
+        />
+      </div>
+    )
   );
 };
 
