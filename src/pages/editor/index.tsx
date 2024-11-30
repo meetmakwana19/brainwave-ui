@@ -44,7 +44,7 @@ interface IEditorPage {
 }
 
 const EditorPage: React.FC<IEditorPage> = (props) => {
-  const path = props.microAppsObj.relativeUrl;
+  // const path = props.microAppsObj.relativeUrl;
   const history = useHistory();
   const [voiceProfiles, setVoiceProfiles] = useState<IBrandKit[]>([]); // State to store voice profiles
   const [selectedVoiceProfile, setSelectedVoiceProfile] =
@@ -152,7 +152,7 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
     console.log(`Button clicked: ${buttonName}`);
   };
   const handleNewDocumentButtonClick = () => {
-    history.push(`${path}/create-new-wave`);
+    // history.push(`${path}/create-new-wave`);
   };
 
   const handleStackChange = (selectedStack: ISelectedValue) => {
