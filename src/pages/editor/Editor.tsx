@@ -156,7 +156,11 @@ const Editor: React.FC<IEditor> = (props) => {
         >
           <input
             type="text"
-            value={title.length > 15 && props.isStackEditor ? `${title.slice(0, 15)}...` : title} // Truncate if more than 35 chars
+            value={
+              title.length > 15 && props.isStackEditor
+                ? `${title.slice(0, 15)}...`
+                : title
+            } // Truncate if more than 35 chars
             onChange={(e) => {
               setTitle(e.target.value);
               isUserTyping.current = true; // Indicate that the user is typing
@@ -167,15 +171,27 @@ const Editor: React.FC<IEditor> = (props) => {
             disabled={dontShowToolBar}
           />
           {props.isStackEditor && (
-            <Button
-              className={`custom-gradient-button ${
-                mappingLoader ? "custom-gradient-button-loading" : ""
-              }`}
-              onClick={() => handleButtonClick()}
-            >
-              <AIIcon />
-              {mappingLoader ? "" : "Add to Entry"}
-            </Button>
+            <>
+              <Button
+                className={`custom-gradient-button ${
+                  mappingLoader ? "custom-gradient-button-loading" : ""
+                }`}
+                onClick={() => handleButtonClick()}
+              >
+                <AIIcon />
+                {mappingLoader ? "" : "Add to Entry"}
+              </Button>
+
+              <Button
+                version="v2"
+                icon="v2-CaretCircleLeft"
+                buttonType="tertiary"
+                onClick={() => {
+                  history.back();
+                }}
+                className="editor-back-button"
+              />
+            </>
           )}
         </div>
         <div className="author-details">

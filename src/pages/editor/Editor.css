@@ -107,3 +107,7 @@
   align-items: flex-start;
   gap: 18px;
 }
+
+.editor-back-button {
+  margin-left: -18px;
+}
