@@ -132,7 +132,7 @@ const Home: React.FC<IHomeProps> = (props) => {
         title: (
           <div className="brain-wave-table-header-wrapper">
             <div className="heading-for-table-text">Recent</div>
-            <div style={{ display: "flex", gap: "16px", marginBottom: "16px" }}>
+            <div style={{ display: "flex", gap: "16px", marginBottom: "26px" }}>
               <CustomBigButton
                 label="New Document"
                 icon={<Icon icon="NewTab" version="v2" size="small" />}

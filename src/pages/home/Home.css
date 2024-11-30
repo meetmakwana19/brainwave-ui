@@ -3,7 +3,7 @@
 }
 
 .home-table-brian-wave .PageLayout--primary .PageLayout__content .PageLayout__head {
-    height: 9.625rem;
+    height: 10rem;
 }
 
 .home-table-brian-wave .PageLayout--primary .PageLayout__content .PageLayout__body {
@@ -13,6 +13,10 @@
 
 .heading-for-table-text {
     padding-bottom: 0.75rem;
+}
+
+.heading-for-table-text div {
+    margin-bottom: 26px;
 }
 
 .home-table-brian-wave .PageLayout--primary .PageLayout__leftSidebar {
@@ -29,7 +33,5 @@
 }
 
 .brain-wave-table-header-wrapper {
-    padding-left: 0.7rem;
-    padding-top: 0.35rem;
-    padding-bottom: 0.35rem;
+    margin: 1rem;
 }
