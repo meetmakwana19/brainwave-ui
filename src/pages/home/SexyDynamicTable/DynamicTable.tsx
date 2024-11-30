@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./DynamicTable.css";
-import { Icon } from "@contentstack/venus-components";
+import { Icon, Notification } from "@contentstack/venus-components";
 import { TableItem } from "../../../common/types";
 import { isEmpty } from "../../../common/utils/utils";
 import { parseISO, formatDistanceToNow } from "date-fns";
+import { deleteDocument } from "../../../api/document";
 
 interface DynamicTableProps {
   data?: TableItem[];
@@ -17,14 +18,42 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
   onRowClick,
 }) => {
   const [tableData, setTableData] = useState(data);
+  const [deleting, setDeleting] = useState(false);
 
   // Function to handle row click
 
   // Function to handle delete
   const handleDelete = (uid: string) => {
-    setTableData(tableData?.filter((item) => item.uid !== uid));
+    // setTableData(tableData?.filter((item) => item.uid !== uid));
+
+    setDeleting(true);
+    deleteDocument(uid)
+      .then(async () => {
+        console.log("Document deleted successfully");
+        Notification({
+          type: "success",
+          notificationContent: {
+            text: "Document deleted successfully",
+          },
+          notificationProps: { hideProgressBar: true, autoClose: true },
+        });
+        
+        await fetchDocuments();
+        
+        setDeleting(false);
+      })
+      .catch((error) => {
+        setDeleting(false);
+        Notification({
+          type: "error",
+          notificationContent: {
+            text: "Error deleting the document",
+          },
+          notificationProps: { hideProgressBar: true, autoClose: true },
+        });
+        console.error("Error deleting document:", error);
+      });
   };
-  console.log(tableData);
 
   useEffect(() => {
     fetchDocuments();
@@ -75,6 +104,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
                       e.stopPropagation(); // Prevent row click when delete is clicked
                       handleDelete(item.uid);
                     }}
+                    disabled={deleting}
                   >
                     <Icon
                       className="delete-brain-wave-button-icon"

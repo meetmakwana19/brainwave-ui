@@ -68,6 +68,21 @@ export const putDocument = async (documentUid: string, document: Document) => {
   }
 };
 
+export const deleteDocument = async (documentUid: string) => {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/documents/${documentUid}`,
+      {
+        method: "DELETE",
+      }
+    );
+    return await handleFetchError(response);
+  } catch (error) {
+    console.error(`Error deleting document with UID ${documentUid}:`, error);
+    throw error;
+  }
+}
+
 export const fetchStacks = async (microAppsObj: IMicroAppsObj) => {
   console.log("microAppsObj in fetchStacks", microAppsObj);
 

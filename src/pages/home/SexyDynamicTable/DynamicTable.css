@@ -1,4 +1,4 @@
-.home-table-brian-wave .PageLayout__body  {
+.home-table-brian-wave .PageLayout__body {
   padding-top: 1.5rem;
 }
 .table-container {
@@ -92,6 +92,13 @@
       fill: #e42222;
     }
   }
+}
+
+.action-button:disabled {
+  cursor: not-allowed; /* Prevent clicking */
+  opacity: 0.6; /* Dim the button to indicate it's disabled */
+  transform: none; /* Disable hover scaling */
+  box-shadow: none; /* Disable hover shadow */
 }
 
 .share-button {
