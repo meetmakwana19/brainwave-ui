@@ -95,7 +95,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
             >
               <td>
                 {isEmpty(item.title) ? (
-                  "Untitled"
+                  "Untitled Document"
                 ) : (
                   <Truncate maxChar={80}>{item.title}</Truncate>
                 )}
