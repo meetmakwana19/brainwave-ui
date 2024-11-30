@@ -29,12 +29,22 @@ const Editor: React.FC<IEditor> = (props) => {
   const editorContentRef = useRef<any>([]);
   const { documentUid } = useParams<{ documentUid: string }>();
   const [mappingLoader, setMappingLoader] = useState<boolean>(false);
-
-  console.log("isStackEditor --- ", props.isStackEditor);
+  const isUserTyping = useRef(false); // Track whether the user is typing
 
   useEffect(() => {
-    setTitle(props.docTitle);
+    if (!isUserTyping.current) {
+      setTitle(props.docTitle);
+    }
   }, [props.docTitle]);
+
+  // Reset isUserTyping after a delay to allow syncing from props
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      isUserTyping.current = false;
+    }, 3000); // Adjust the delay as necessary
+
+    return () => clearTimeout(timeout);
+  }, [title]);
 
   useEffect(() => {
     editorContentRef.current = props.docData?.document;
@@ -124,7 +134,6 @@ const Editor: React.FC<IEditor> = (props) => {
   };
 
   const handleButtonClick = () => {
-
     sendDataToParent();
 
     setMappingLoader(true); // Set mappingLoader to true
@@ -140,12 +149,17 @@ const Editor: React.FC<IEditor> = (props) => {
       }`}
     >
       <div className="sub-heading">
-        <div className={`title-input ${dontShowToolBar ? "title-input-stack-view" : null}`}>
+        <div
+          className={`title-input ${
+            dontShowToolBar ? "title-input-stack-view" : null
+          }`}
+        >
           <input
             type="text"
             value={title.length > 15 && props.isStackEditor ? `${title.slice(0, 15)}...` : title} // Truncate if more than 35 chars
             onChange={(e) => {
               setTitle(e.target.value);
+              isUserTyping.current = true; // Indicate that the user is typing
               handleDebouncedChange(e.target.value);
             }}
             placeholder="Untitled"
