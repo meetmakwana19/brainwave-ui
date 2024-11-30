@@ -6,7 +6,7 @@ interface CustomButtonProps {
   icon?: React.ReactNode;
   onClick: () => void;
   isActive: boolean;
-  description: string;
+  description?: string;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
