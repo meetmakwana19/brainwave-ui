@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./DynamicTable.css";
-import { Icon, Notification } from "@contentstack/venus-components";
+import { Icon, Notification, Truncate } from "@contentstack/venus-components";
 import { TableItem } from "../../../common/types";
 import { isEmpty } from "../../../common/utils/utils";
 import { parseISO, formatDistanceToNow } from "date-fns";
@@ -37,9 +37,9 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
           },
           notificationProps: { hideProgressBar: true, autoClose: true },
         });
-        
+
         await fetchDocuments();
-        
+
         setDeleting(false);
       })
       .catch((error) => {
@@ -93,7 +93,13 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
               className="table-row"
               onClick={() => onRowClick(item)} // Trigger the onRowClick function
             >
-              <td>{isEmpty(item.title) ? "Untitled" : item.title}</td>
+              <td>
+                {isEmpty(item.title) ? (
+                  "Untitled"
+                ) : (
+                  <Truncate maxChar={80}>{item.title}</Truncate>
+                )}
+              </td>
               <td>{item.author}</td>
               <td>{getRelativeTime(item.last_updated)}</td>
               {viewMode ? null : (
