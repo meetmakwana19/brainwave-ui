@@ -30,7 +30,10 @@ const StackEditor: React.FC<IStackEditor> = (props) => {
   }, [documentUid]);
 
   return loading ? (
-    <>Loading</>
+    <div className="brainwave-spin-loader">
+      <div className="loader"></div>
+      <h1>Please wait</h1>
+    </div>
   ) : (
     <div className="stack-editor-view">
       <Editor
@@ -39,7 +42,6 @@ const StackEditor: React.FC<IStackEditor> = (props) => {
         setDocTitle={setDocTitle}
         docData={docData}
         isContentEmpty={true}
-
       />
     </div>
   );
