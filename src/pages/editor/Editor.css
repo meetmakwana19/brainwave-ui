@@ -16,6 +16,7 @@
 .editor-section #scrte-editor #scrte-toolbar {
   background-color: transparent;
   border: none;
+  position: relative;
 }
 
 .editor-section #scrte-editor #scrte-toolbar .toolbar-parent {
