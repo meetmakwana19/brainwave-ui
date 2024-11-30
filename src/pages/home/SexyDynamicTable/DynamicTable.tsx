@@ -130,7 +130,7 @@ const DynamicTable: React.FC<DynamicTableProps> = ({
                     className="action-button share-button"
                     onClick={(e) => {
                       e.stopPropagation(); // Prevent row click when delete is clicked
-                      handleDelete(item.uid);
+                      // handleDelete(item.uid);
                     }}
                   >
                     <Icon
