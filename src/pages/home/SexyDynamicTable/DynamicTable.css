@@ -1,11 +1,15 @@
+.home-table-brian-wave .PageLayout__body  {
+  padding-top: 1.5rem;
+}
 .table-container {
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
   padding: 1.25rem;
+  padding-top: 0;
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
   overflow: auto;
   height: 100%;
   font-family: Inter;
