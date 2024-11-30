@@ -1,4 +1,9 @@
-import { Button, Icon, JsonRTE } from "@contentstack/venus-components";
+import {
+  Button,
+  Icon,
+  JsonRTE,
+  Truncate,
+} from "@contentstack/venus-components";
 import React, { useEffect, useRef, useState } from "react";
 import "./Editor.css";
 import { useLocation, useParams } from "react-router-dom";
@@ -154,22 +159,30 @@ const Editor: React.FC<IEditor> = (props) => {
             dontShowToolBar ? "title-input-stack-view" : null
           }`}
         >
-          <input
-            type="text"
-            value={
-              title.length > 15 && props.isStackEditor
-                ? `${title.slice(0, 15)}...`
-                : title
-            } // Truncate if more than 35 chars
-            onChange={(e) => {
-              setTitle(e.target.value);
-              isUserTyping.current = true; // Indicate that the user is typing
-              handleDebouncedChange(e.target.value);
-            }}
-            placeholder="Untitled"
-            className="editable-title"
-            disabled={dontShowToolBar}
-          />
+          {props.isStackEditor ? (
+            <div className="editable-title">
+              <Truncate maxChar={20}>
+                {isEmpty(title) ? "Untitled Document" : title}
+              </Truncate>
+            </div>
+          ) : (
+            <input
+              type="text"
+              value={
+                title.length > 15 && props.isStackEditor
+                  ? `${title.slice(0, 15)}...`
+                  : title
+              } // Truncate if more than 35 chars
+              onChange={(e) => {
+                setTitle(e.target.value);
+                isUserTyping.current = true; // Indicate that the user is typing
+                handleDebouncedChange(e.target.value);
+              }}
+              placeholder="Untitled"
+              className="editable-title"
+              disabled={dontShowToolBar}
+            />
+          )}
           {props.isStackEditor && (
             <>
               <Button
