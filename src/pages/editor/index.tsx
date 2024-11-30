@@ -15,6 +15,7 @@ import CustomBigButton from "../home/CustomBigButton/CustomBigButton";
 import { isEmpty } from "../../common/utils/utils";
 import { fetchStacks, getSingleDocument } from "../../api/document";
 import { TableItem } from "../../common/types";
+import AIIcon from "../../common/components/AIIcon";
 
 interface ISelectedValue {
   label: string;
@@ -55,10 +56,13 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
   const [stacksData, setStacksData] = useState<{ name: string; uid: string }[]>(
     []
   );
-  const [checkedStacks, setCheckedStacks] = useState<Map<string, boolean>>(new Map());
+  const [checkedStacks, setCheckedStacks] = useState<Map<string, boolean>>(
+    new Map()
+  );
 
-  const [selectedStacks, setSelectedStacks] = useState<{ [key: string]: boolean }>({});
-
+  const [selectedStacks, setSelectedStacks] = useState<{
+    [key: string]: boolean;
+  }>({});
 
   // const [loading, setLoading] = useState<boolean>(false);
   const [isContentEmpty, setIsContentEmpty] = useState(true);
@@ -171,8 +175,6 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
         [selectedStack.value]: !isChecked,
       };
     });
-
-
   };
 
   const getLabelWithCheck = (stack: { name: string; uid: string }) => {
@@ -272,22 +274,25 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
           }`}
         >
           <CustomBigButton
-            label="New Document"
-            icon={<Icon icon="NewTab" version="v2" size="small" />}
+            label="Ask AI"
+            icon={<AIIcon />}
             onClick={() => handleNewDocumentButtonClick()}
             isActive={true} /* Set to true if active */
+            description="Brainstorm and more"
           />
           <CustomBigButton
             label="Templates"
             icon={<Icon icon="Layout" version="v2" size="small" />}
             onClick={() => handleButtonClick("Templates")}
             isActive={true} /* Set to true if active */
+            description="Choose templates"
           />
           <CustomBigButton
             label="Import"
             icon={<Icon icon="Download" version="v2" size="small" />}
             onClick={() => handleButtonClick("Import")}
             isActive={false} /* Set to true if active */
+            description="Coming soon"
           />
         </div>
       </div>
