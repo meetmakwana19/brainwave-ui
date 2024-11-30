@@ -143,7 +143,7 @@ const Editor: React.FC<IEditor> = (props) => {
         <div className={`title-input ${dontShowToolBar ? "title-input-stack-view" : null}`}>
           <input
             type="text"
-            value={title.length > 15 ? `${title.slice(0, 15)}...` : title} // Truncate if more than 35 chars
+            value={title.length > 15 && props.isStackEditor ? `${title.slice(0, 15)}...` : title} // Truncate if more than 35 chars
             onChange={(e) => {
               setTitle(e.target.value);
               handleDebouncedChange(e.target.value);

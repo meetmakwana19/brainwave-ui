@@ -265,6 +265,7 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
           docTitle={docTitle}
           setDocTitle={setDocTitle}
           docData={docData}
+          isStackEditor={false}
         />
         <div
           className={`${
