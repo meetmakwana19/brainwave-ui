@@ -256,7 +256,10 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
 
   const content = {
     component: loading ? (
-      <>Loading</>
+      <div className="brainwave-spin-loader">
+        <div className="loader"></div>
+        <h1>Please wait</h1>
+      </div>
     ) : (
       <div className="editor-container">
         <Editor
