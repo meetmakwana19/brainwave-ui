@@ -154,7 +154,7 @@
 }
 
 .PageLayout__body__container,
-.editor-container,
+/* .editor-container, */
 .editor-section,
 .editor-full {
   height: 100%; /* Ensure they propagate the height */
@@ -163,6 +163,6 @@
 
 #scrte-editable {
   height: auto; /* Let it grow to fit its content */
-  min-height: 100%; /* Ensure at least 100% height */
+  /* min-height: 100%; Ensure at least 100% height */
   overflow: visible; /* Avoid clipping content */
 }
