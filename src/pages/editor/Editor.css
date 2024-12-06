@@ -139,3 +139,30 @@
   }
 }
 
+/* ---------- For full page level editor ---------- */
+
+.PageLayout__body {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+#scrte-editable {
+  flex: 1; /* Allow the child to grow/shrink with the parent */
+  overflow: hidden; /* No scroll here */
+  position: relative;
+}
+
+.PageLayout__body__container,
+.editor-container,
+.editor-section,
+.editor-full {
+  height: 100%; /* Ensure they propagate the height */
+  overflow: visible; /* Allow overflow to pass through */
+}
+
+#scrte-editable {
+  height: auto; /* Let it grow to fit its content */
+  min-height: 100%; /* Ensure at least 100% height */
+  overflow: visible; /* Avoid clipping content */
+}
