@@ -41,3 +41,23 @@ export const formatDate = (dateString: string) => {
     hour12: false,
   })} ${date.toLocaleDateString("en-GB")}`;
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const checkIsContentEmpty = (content: any[]): boolean => {
+  // If content is not an array or is empty, it's considered empty
+  if (!Array.isArray(content) || content.length === 0) {
+    return true;
+  }
+
+  // Recursively check all children for non-empty text
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const checkNode = (node: any): boolean => {
+    if (node?.children?.length > 0) {
+      return node.children.every(checkNode);
+    }
+    return !node.text?.trim(); // Text is empty or only whitespace
+  };
+
+  // Check all top-level nodes
+  return content.every(checkNode);
+};

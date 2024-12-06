@@ -11,7 +11,7 @@ import { useLocation, useParams } from "react-router-dom";
 import debounce from "lodash.debounce";
 import { putDocument } from "../../api/document";
 import { TableItem } from "../../common/types";
-import { formatDate, isEmpty } from "../../common/utils/utils";
+import { checkIsContentEmpty, formatDate, isEmpty } from "../../common/utils/utils";
 import { mappingData } from "./data";
 import AIIcon from "../../common/components/AIIcon";
 
@@ -81,26 +81,6 @@ const Editor: React.FC<IEditor> = (props) => {
       console.log("saving : ", editorContentRef.current);
     }
   }, [props.isStackEditor]);
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const checkIsContentEmpty = (content: any[]): boolean => {
-    // If content is not an array or is empty, it's considered empty
-    if (!Array.isArray(content) || content.length === 0) {
-      return true;
-    }
-
-    // Recursively check all children for non-empty text
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const checkNode = (node: any): boolean => {
-      if (node?.children?.length > 0) {
-        return node.children.every(checkNode);
-      }
-      return !node.text?.trim(); // Text is empty or only whitespace
-    };
-
-    // Check all top-level nodes
-    return content.every(checkNode);
-  };
 
   // Debounced content handler
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -12,7 +12,7 @@ import { useHistory, useParams } from "react-router-dom";
 import Editor from "./Editor";
 import { IMicroAppsObj } from "../../types/microAppObj";
 import CustomBigButton from "../home/CustomBigButton/CustomBigButton";
-import { isEmpty } from "../../common/utils/utils";
+import { checkIsContentEmpty, isEmpty } from "../../common/utils/utils";
 import { fetchStacks, getSingleDocument } from "../../api/document";
 import { TableItem } from "../../common/types";
 import AIIcon from "../../common/components/AIIcon";
@@ -130,6 +130,13 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
         console.log("Document fetched successfully", response);
         setDocTitle(response.title);
         setDocData(response);
+
+        if (checkIsContentEmpty(response.document)) {
+          setIsContentEmpty(true);
+        } else {
+          setIsContentEmpty(false);
+        }
+
         setLoading(false);
       })
       .catch((error) => {
