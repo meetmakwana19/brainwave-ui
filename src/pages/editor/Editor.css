@@ -17,6 +17,11 @@
   background-color: transparent;
   border: none;
   position: relative;
+
+  /* New styles to place toolbar on header */
+  position: fixed;
+  z-index: 10 !important;
+  top: 65px;
 }
 
 .editor-section #scrte-editor #scrte-toolbar .toolbar-parent {
@@ -111,3 +116,26 @@
 .editor-back-button {
   margin-left: -18px;
 }
+
+.editor-section {
+  #scroller {
+    border: none !important;
+
+    .editor-resize + svg {
+      display: none !important;
+    }
+  }
+}
+.editor-full #scroller {
+  min-height: calc(100vh - 420px);
+  border: none !important;
+
+  .scrte-editable {
+    min-height: calc(100vh - 420px);
+  }
+
+  .editor-resize + svg {
+    display: none !important;
+  }
+}
+

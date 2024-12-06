@@ -149,9 +149,10 @@ const Editor: React.FC<IEditor> = (props) => {
 
   return (
     <div
-      className={`editor-section ${
-        dontShowToolBar ? "dont-show-rte-toolbar" : null
-      }`}
+      className={`editor-section 
+        ${dontShowToolBar ? "dont-show-rte-toolbar" : null} 
+        ${props.isContentEmpty ? "" : "editor-full"}
+        `}
     >
       <div className="sub-heading">
         <div

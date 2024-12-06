@@ -45,6 +45,13 @@
   width: auto !important;
 }
 
+.editor-page-layout {
+  .PageLayout__head {
+    z-index: 0 !important;
+    border: none !important;
+  }
+}
+
 .editor-bottom-button-container {
   padding: 32px;
   display: flex;
