@@ -6,6 +6,7 @@ import {
   Dropdown,
   Icon,
   Notification,
+  Tooltip,
 } from "@contentstack/venus-components";
 import React, { useEffect, useState } from "react";
 import "./index.css";
@@ -264,25 +265,34 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
                   <div className="dropdown-label">{selectedVoiceProfile}</div>
                 </Dropdown>
 
-                <Dropdown
-                  version="v2"
-                  list={stacksData.map(
-                    (stack: { name: string; uid: string }) => ({
-                      label: getLabelWithCheck(stack), // Display the name of the stack
-                      value: stack.uid, // Store the stack UID as the value
-                    })
-                  )}
-                  type="click"
-                  withArrow={true}
-                  highlightActive={true}
-                  withSearch={true}
-                  closeAfterSelect={true}
-                  onChange={handleStackChange} // Pass the function to handle selection
-                  className="stack-dropdown"
+                <Tooltip
+                  // version="v2"
+                  position="top"
+                  className="stack-connect-tooltip"
+                  content={"Connect Stack"}
+                  interactive={false}
+                  variantType="basic"
                 >
-                  <Icon icon="Stacks" version="v2" size="medium" />
-                  <div className="dropdown-label">Connect Stack</div>
-                </Dropdown>
+                  <Dropdown
+                    version="v2"
+                    list={stacksData.map(
+                      (stack: { name: string; uid: string }) => ({
+                        label: getLabelWithCheck(stack), // Display the name of the stack
+                        value: stack.uid, // Store the stack UID as the value
+                      })
+                    )}
+                    type="click"
+                    withArrow={true}
+                    highlightActive={true}
+                    withSearch={true}
+                    closeAfterSelect={true}
+                    onChange={handleStackChange} // Pass the function to handle selection
+                    className="stack-dropdown"
+                  >
+                    <Icon icon="Stacks" version="v2" size="medium" />
+                    {/* <div className="dropdown-label">Connect Stack</div> */}
+                  </Dropdown>
+                </Tooltip>
 
                 <Button version="v2" buttonType="tertiary" icon="v2-Lock">
                   Share

@@ -5,6 +5,37 @@
 
 .editor-page-layout .PageHeader {
   margin-top: 0.5rem;
+
+  .Dropdown__v2 {
+    border: none !important;
+    border-radius: 0.75rem;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.06) !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    &:focus {
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    .Dropdown__menu--primary {
+      max-height: 20rem !important;
+      border-radius: 1rem;
+
+      .Dropdown__menu__list {
+        max-height: 20rem !important;
+      }
+    }
+  }
+
+  .actions {
+    .stack-dropdown .Dropdown__menu--primary {
+      left: -120px;
+    }
+  }
 }
 
 .editor-page-layout .PageTitleWrapper {
@@ -28,7 +59,7 @@
   /* .Button__group {
     margin-right: 10px;
   } */
-   
+
   .Dropdown__v2 {
     border: none !important;
     border-radius: 0.75rem;
@@ -53,7 +84,7 @@
       }
 
       svg path {
-        fill: black
+        fill: black;
       }
     }
 
@@ -65,9 +96,6 @@
         max-height: 20rem !important;
       }
     }
-  }
-  &:hover {
-    /* background-color: rgba(0, 0, 0, 0.06) !important; */
   }
 }
 
@@ -114,4 +142,8 @@
 
 .stack-dropdown div svg:nth-of-type(2) {
   display: none;
+}
+
+.stack-dropdown .Dropdown__header svg[name="CaretDownNew"] {
+  display: none !important;
 }
