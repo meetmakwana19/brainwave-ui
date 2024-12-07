@@ -258,7 +258,7 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
         ]}
       />
     ),
-    backNavigation: () => history.goBack(),
+    backNavigation: () => history.push(`${props.microAppsObj.relativeUrl}`),
   };
 
   const content = {
