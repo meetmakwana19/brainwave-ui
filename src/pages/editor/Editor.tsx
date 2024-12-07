@@ -22,6 +22,7 @@ interface IEditor {
   setDocTitle: React.Dispatch<React.SetStateAction<string>>;
   isStackEditor?: boolean;
   docData: TableItem;
+  setIsSyncing?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Editor: React.FC<IEditor> = (props) => {
@@ -96,13 +97,22 @@ const Editor: React.FC<IEditor> = (props) => {
     // alert("Debounced content change detected");
     // makePutRequest(content);
 
+    if (props.setIsSyncing) {
+      props.setIsSyncing(true);
+    }
     putDocument(documentUid, putPayload)
       .then((response) => {
         console.log("Document updated successfully", response);
         props.setDocTitle(response.title);
+        if (props.setIsSyncing) {
+          props.setIsSyncing(false);
+        }    
       })
       .catch((error) => {
         console.error("Error in updating document", error);
+        if (props.setIsSyncing) {
+          props.setIsSyncing(false);
+        }    
       });
   }, 2000); // Adjust debounce delay as neededx
 

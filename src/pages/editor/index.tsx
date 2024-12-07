@@ -78,6 +78,10 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
   const [firstFiveDocs, setFirstFiveDocs] = useState([]);
   const targetRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [isSyncing, setIsSyncing] = useState<boolean>(false);
+  const backButtonRef = useRef<HTMLElement | null>(null);
+  const loaderRef = useRef<HTMLDivElement | null>(null);
+  const delayTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const voiceProfileList = async () => {
     const url =
@@ -171,6 +175,44 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
       });
   }, [documentUid]);
 
+  useEffect(() => {
+    backButtonRef.current = document.querySelector(
+      '[data-test-id="cs-page-layout-go-back"]'
+    );
+
+    if (isSyncing) {
+      if (backButtonRef.current) {
+        // Hide the back button
+        (backButtonRef.current as HTMLElement).style.display = "none";
+
+        // Create and insert the loader if not already present
+        if (!loaderRef.current) {
+          const loaderDiv = document.createElement("div");
+          loaderDiv.className = "loader-sm";
+          loaderDiv.setAttribute("data-test-id", "cs-page-layout-loader");
+          loaderRef.current = loaderDiv;
+          backButtonRef.current.parentNode?.insertBefore(
+            loaderDiv,
+            backButtonRef.current
+          );
+        }
+      }
+    } else {
+      if (backButtonRef.current) {
+        delayTimeoutRef.current = setTimeout(() => {
+          // Show the back button
+          backButtonRef.current!.style.display = "inline-block";
+
+          // Remove the loader if it exists
+          if (loaderRef.current) {
+            loaderRef.current.remove();
+            loaderRef.current = null;
+          }
+        }, 2000); // 2-second delay before removing the loader and showing the back button
+      }
+    }
+  }, [isSyncing]);
+
   const handleVoiceProfileChange = (selectedValue: ISelectedValue) => {
     // const selectedProfile = voiceProfiles.find(
     //   (profile) => profile.uid === selectedValue
@@ -185,7 +227,7 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
     console.log(`Button clicked: ${buttonName}`);
   };
   const handleNewDocumentButtonClick = () => {
-    // history.push(`${path}/create-new-wave`);
+    // history.push(`${path}/create-new-wave`);`
   };
 
   const handleStackChange = (selectedStack: ISelectedValue) => {
@@ -231,7 +273,9 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
     if (!isOpen) {
       setIsOpen(true);
       InfoModal({
-        component: (props: InfoModalProps) => <ShareModal {...props} documentName={docTitle}/>,
+        component: (props: InfoModalProps) => (
+          <ShareModal {...props} documentName={docTitle} />
+        ),
         modalProps: {
           onClose,
           targetNodeOrId: targetRef.current,
@@ -326,7 +370,12 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
                   </Dropdown>
                 </Tooltip>
 
-                <div className={`share-document ${isOpen ? "share-modal-open" : ""}`} onClick={handleShare}>
+                <div
+                  className={`share-document ${
+                    isOpen ? "share-modal-open" : ""
+                  }`}
+                  onClick={handleShare}
+                >
                   <Icon version="v2" icon="Lock" size="medium" />
                   <div className="share-label" ref={targetRef}>
                     Share
@@ -356,6 +405,7 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
           setDocTitle={setDocTitle}
           docData={docData}
           isStackEditor={false}
+          setIsSyncing={setIsSyncing}
         />
         <div
           className={`${
