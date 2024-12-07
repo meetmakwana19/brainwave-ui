@@ -4,7 +4,7 @@
   right: 0; /* Align it to the right of the button */
   background: #fff;
   width: 400px;
-  border-radius: 8px;
+  border-radius: 1rem;
   overflow: hidden;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
@@ -13,6 +13,8 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 3px rgba(0, 0, 0, 0.12), 0 4px 15px rgba(108, 92, 231, 0.2);
 
   .share-modal-header {
     display: flex;
