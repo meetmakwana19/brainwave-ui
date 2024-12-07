@@ -59,6 +59,12 @@
 
       &:hover {
         background-color: rgba(0, 0, 0, 0.06) !important;
+        cursor: pointer;
+      }
+
+      .share-doc-modal {
+        right: 0;
+        top: 28px;
       }
     }
   }

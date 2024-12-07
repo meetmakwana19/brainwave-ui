@@ -6,8 +6,9 @@ import {
   Icon,
   Notification,
   Tooltip,
+  InfoModal,
 } from "@contentstack/venus-components";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./index.css";
 import { useHistory, useParams } from "react-router-dom";
 import Editor from "./Editor";
@@ -21,6 +22,7 @@ import {
 } from "../../api/document";
 import { TableItem } from "../../common/types";
 import AIIcon from "../../common/components/AIIcon";
+import ShareModal from "./common/ShareModal";
 
 interface ISelectedValue {
   label: string;
@@ -48,6 +50,10 @@ interface IEditorPage {
   microAppsObj: IMicroAppsObj;
 }
 
+interface InfoModalProps {
+  closeModal: () => void;
+}
+
 const EditorPage: React.FC<IEditorPage> = (props) => {
   // const path = props.microAppsObj.relativeUrl;
   const history = useHistory();
@@ -70,6 +76,8 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
   // const [loading, setLoading] = useState<boolean>(false);
   const [isContentEmpty, setIsContentEmpty] = useState(true);
   const [firstFiveDocs, setFirstFiveDocs] = useState([]);
+  const targetRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const voiceProfileList = async () => {
     const url =
@@ -213,6 +221,31 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
     return isChecked ? `${stack.name} ✅` : stack.name;
   };
 
+  const onClose = () => {
+    setIsOpen(false);
+    alert("Closing info modal");
+  };
+
+  const handleShare = () => {
+    // alert("Share document");
+    if (!isOpen) {
+      setIsOpen(true);
+      InfoModal({
+        component: (props: InfoModalProps) => <ShareModal {...props} />,
+        modalProps: {
+          onClose,
+          targetNodeOrId: targetRef.current,
+          closeOnOverlayClick: true,
+          wrapperStyle: {
+            borderRadius: "4px",
+          },
+          className: "share-doc-modal",
+        },
+        alignment: "bottom-right",
+      });
+    }
+  };
+
   const header = {
     component: (
       <PageHeader
@@ -293,9 +326,11 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
                   </Dropdown>
                 </Tooltip>
 
-                <div className="share-document">
+                <div className="share-document" onClick={handleShare}>
                   <Icon version="v2" icon="Lock" size="medium" />
-                  <div className="share-label">Share</div>
+                  <div className="share-label" ref={targetRef}>
+                    Share
+                  </div>
                 </div>
               </>
             ),
