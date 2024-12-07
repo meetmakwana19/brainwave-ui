@@ -231,7 +231,7 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
     if (!isOpen) {
       setIsOpen(true);
       InfoModal({
-        component: (props: InfoModalProps) => <ShareModal {...props} />,
+        component: (props: InfoModalProps) => <ShareModal {...props} documentName={docTitle}/>,
         modalProps: {
           onClose,
           targetNodeOrId: targetRef.current,

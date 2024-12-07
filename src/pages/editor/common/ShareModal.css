@@ -1,4 +1,48 @@
 .share-modal {
-    border: 2px solid black;
-    background-color: red;
+  position: absolute; /* Absolute positioning relative to the nearest positioned ancestor */
+  top: 100%; /* Align it below the button */
+  right: 0; /* Align it to the right of the button */
+  background: #fff;
+  width: 400px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 24px 20px 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .share-modal-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .share-modal-title {
+      font-size: 18px;
+      font-weight: 590;
+    }
+
+    .share-separator {
+      width: 1px;
+      height: 12px;
+      background-color: rgba(0, 0, 0, 0.12);
+    }
+
+    .share-doc-title {
+      font-size: 14px;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .share-modal-body {
+    padding-top: 0;
+
+    #collaborator-email {
+        border-radius: 10px;
+    }
+  }
 }
