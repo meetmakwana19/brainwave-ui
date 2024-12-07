@@ -223,7 +223,7 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
 
   const onClose = () => {
     setIsOpen(false);
-    alert("Closing info modal");
+    // alert("Closing info modal");
   };
 
   const handleShare = () => {

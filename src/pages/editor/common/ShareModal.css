@@ -35,6 +35,10 @@
       font-weight: 400;
       display: flex;
       align-items: center;
+
+      div:first-child {
+        display: flex;
+      }
     }
   }
 
@@ -42,7 +46,32 @@
     padding-top: 0;
 
     #collaborator-email {
-        border-radius: 10px;
+      border-radius: 10px;
+    }
+  }
+
+  .share-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    .share-button-modal {
+      background-color: white;
+      color: rgb(26, 26, 26);
+      border: none;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .share-button-modal:hover {
+      background-color: rgba(0, 0, 0, 0.06);
     }
   }
 }

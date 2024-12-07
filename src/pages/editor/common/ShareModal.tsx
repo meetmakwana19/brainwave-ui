@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./ShareModal.css";
-import { Button, Icon, Pills } from "@contentstack/venus-components";
+import { Icon, Pills, Truncate } from "@contentstack/venus-components";
 
 interface IShareModal {
   closeModal: () => void;
@@ -71,7 +71,7 @@ const ShareModal: React.FC<IShareModal> = (props) => {
         <div className="share-separator"></div>
         <div className="share-doc-title">
           <Icon icon="ApiDocs" version="v2" size="small" />
-          <span>{props.documentName}</span>
+          <Truncate>{props.documentName}</Truncate>
         </div>
       </div>
       <div className="share-modal-body">
@@ -91,14 +91,10 @@ const ShareModal: React.FC<IShareModal> = (props) => {
         )} */}
       </div>
       <div className="share-modal-footer">
-        <Button
-          version="v2"
-          buttonType="primary"
-          onClick={handleSubmit}
-          data-test-id="share-modal-submit-button"
-        >
-          Share
-        </Button>
+        <button className="share-button-modal" onClick={handleSubmit}>
+            Share
+            {/* <Icon icon="Send" version="v2" size="small"/> */}
+        </button>
       </div>
     </div>
   );
