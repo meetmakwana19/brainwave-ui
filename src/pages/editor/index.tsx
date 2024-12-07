@@ -326,7 +326,7 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
                   </Dropdown>
                 </Tooltip>
 
-                <div className="share-document" onClick={handleShare}>
+                <div className={`share-document ${isOpen ? "share-modal-open" : ""}`} onClick={handleShare}>
                   <Icon version="v2" icon="Lock" size="medium" />
                   <div className="share-label" ref={targetRef}>
                     Share
