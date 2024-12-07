@@ -203,8 +203,10 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
   };
 
   const handleDocSwitch = (selectedDoc: ISelectedValue) => {
-    history.push(`${props.microAppsObj.relativeUrl}/wave-editor/${selectedDoc.value}`);
-  }
+    history.push(
+      `${props.microAppsObj.relativeUrl}/wave-editor/${selectedDoc.value}`
+    );
+  };
 
   const getLabelWithCheck = (stack: { name: string; uid: string }) => {
     const isChecked = selectedStacks[stack.uid] || false;
