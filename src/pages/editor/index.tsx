@@ -1,5 +1,4 @@
 import {
-  Button,
   PageHeader,
   PageLayout,
   Truncate,
@@ -294,13 +293,10 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
                   </Dropdown>
                 </Tooltip>
 
-                <Button version="v2" buttonType="tertiary" icon="v2-Lock">
-                  Share
-                </Button>
-
-                {/* <Button version="v2" buttonType="primary">
-                  Connect
-                </Button> */}
+                <div className="share-document">
+                  <Icon version="v2" icon="Lock" size="medium" />
+                  <div className="share-label">Share</div>
+                </div>
               </>
             ),
           },

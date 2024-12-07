@@ -35,6 +35,32 @@
     .stack-dropdown .Dropdown__menu--primary {
       left: -120px;
     }
+
+    .share-document {
+      display: flex;
+      -webkit-box-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-weight: 600;
+      text-wrap: nowrap;
+      gap: 4px;
+      height: 32px;
+      padding: 18px 10px;
+      font-size: 14px;
+      line-height: 16px;
+      border-radius: 8px;
+      color: rgb(26, 26, 26);
+      background: transparent;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0px 4px 4px -4px rgba(0, 0, 0, 0.02),
+        0px 1px 2px rgba(0, 0, 0, 0.04);
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.06) !important;
+      }
+    }
   }
 }
 
