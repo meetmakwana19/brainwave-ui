@@ -5,6 +5,7 @@ import {
   Truncate,
   Dropdown,
   Icon,
+  Notification,
 } from "@contentstack/venus-components";
 import React, { useEffect, useState } from "react";
 import "./index.css";
@@ -13,7 +14,11 @@ import Editor from "./Editor";
 import { IMicroAppsObj } from "../../types/microAppObj";
 import CustomBigButton from "../home/CustomBigButton/CustomBigButton";
 import { checkIsContentEmpty, isEmpty } from "../../common/utils/utils";
-import { fetchStacks, getSingleDocument } from "../../api/document";
+import {
+  fetchStacks,
+  getAllDocuments,
+  getSingleDocument,
+} from "../../api/document";
 import { TableItem } from "../../common/types";
 import AIIcon from "../../common/components/AIIcon";
 
@@ -59,13 +64,12 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
   const [checkedStacks, setCheckedStacks] = useState<Map<string, boolean>>(
     new Map()
   );
-
   const [selectedStacks, setSelectedStacks] = useState<{
     [key: string]: boolean;
   }>({});
-
   // const [loading, setLoading] = useState<boolean>(false);
   const [isContentEmpty, setIsContentEmpty] = useState(true);
+  const [firstFiveDocs, setFirstFiveDocs] = useState([]);
 
   const voiceProfileList = async () => {
     const url =
@@ -114,6 +118,20 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
 
   useEffect(() => {
     voiceProfileList();
+    getAllDocuments()
+      .then((response) => {
+        setFirstFiveDocs(response.slice(0, 5));
+      })
+      .catch((error) => {
+        console.error("Error in fetching documents", error);
+        Notification({
+          type: "error",
+          notificationContent: {
+            text: "Couldn't fetch documents for title dropdown",
+          },
+          notificationProps: { hideProgressBar: true, autoClose: true },
+        });
+      });
   }, []);
 
   useEffect(() => {
@@ -184,6 +202,10 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
     });
   };
 
+  const handleDocSwitch = (selectedDoc: ISelectedValue) => {
+    history.push(`${props.microAppsObj.relativeUrl}/wave-editor/${selectedDoc.value}`);
+  }
+
   const getLabelWithCheck = (stack: { name: string; uid: string }) => {
     const isChecked = selectedStacks[stack.uid] || false;
     return isChecked ? `${stack.name} ✅` : stack.name;
@@ -195,9 +217,24 @@ const EditorPage: React.FC<IEditorPage> = (props) => {
         title={{
           label: (
             <div className="editor-heading">
-              <Truncate truncateFrom="end" maxChar={32}>
-                {isEmpty(docTitle) ? "Untitled Document" : docTitle}
-              </Truncate>
+              <Dropdown
+                version="v2"
+                list={firstFiveDocs.map((doc: TableItem) => ({
+                  label: isEmpty(doc.title) ? "Untitled Document" : doc.title,
+                  value: doc.uid,
+                }))}
+                type="click"
+                withArrow={true}
+                highlightActive={true}
+                withSearch={true}
+                closeAfterSelect={true}
+                onChange={handleDocSwitch} // Pass the function to handle selection
+                className="title-dropdown"
+              >
+                <Truncate truncateFrom="end" maxChar={32}>
+                  {isEmpty(docTitle) ? "Untitled Document" : docTitle}
+                </Truncate>
+              </Dropdown>
             </div>
           ),
         }}

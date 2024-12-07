@@ -28,6 +28,47 @@
   /* .Button__group {
     margin-right: 10px;
   } */
+   
+  .Dropdown__v2 {
+    border: none !important;
+    border-radius: 0.75rem;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.06) !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    &:focus {
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    .Dropdown__header {
+      display: flex;
+      gap: 0.5rem;
+
+      > div:first-child {
+        display: flex;
+      }
+
+      svg path {
+        fill: black
+      }
+    }
+
+    .Dropdown__menu--primary {
+      max-height: 20rem !important;
+      border-radius: 1rem;
+
+      .Dropdown__menu__list {
+        max-height: 20rem !important;
+      }
+    }
+  }
+  &:hover {
+    /* background-color: rgba(0, 0, 0, 0.06) !important; */
+  }
 }
 
 .dropdown-label {
