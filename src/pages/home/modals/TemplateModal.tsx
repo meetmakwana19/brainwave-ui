@@ -52,6 +52,7 @@ const TemplateModal: React.FC<ITemplateModal> = (props) => {
         "Keeps a record of discussions, decisions, and outcomes from meetings.",
     },
   ]);
+  const [fetchedContentType, setFetchedContentType] = useState({});
 
   useEffect(() => {
     const fetchTemplates = async () => {
@@ -61,6 +62,7 @@ const TemplateModal: React.FC<ITemplateModal> = (props) => {
         );
         const data = await response.json();
         console.log(data);
+        setFetchedContentType(data[0]?.content_type);
 
         // Assuming that the data structure from the response is similar to the one you provided
         const newTemplate = {
@@ -92,6 +94,7 @@ const TemplateModal: React.FC<ITemplateModal> = (props) => {
             <PromptModal
               closeModal={props.onClose}
               setChangePage={newSetChangePage}
+              fetchedContentType={fetchedContentType}
               {...props}
             />
           </Provider>

@@ -20,6 +20,8 @@ interface IPromptModal {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   closeModal: ((data: any) => void) | undefined;
   setChangePage: React.Dispatch<React.SetStateAction<boolean>>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fetchedContentType: any;
 }
 const PromptModal: React.FC<IPromptModal> = (props) => {
   const [prompt, setPrompt] = useState("");
@@ -46,20 +48,24 @@ const PromptModal: React.FC<IPromptModal> = (props) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            message: prompt,
+            query: prompt,
+            content_type: JSON.stringify(props.fetchedContentType),
           }),
         }
       );
-      const data = await response.json();
+      let data = await response.json();
+      data = JSON.parse(data);
+      data = data.document;
+
       console.log("Successfull generated template ----  ", data);
 
       const docContent = {
         title: "",
         document: [
           {
-            type: data.type,
+            type: data[0].type,
             uid: generateSimpleUID(),
-            children: data.children,
+            children: data[0].children,
           },
         ],
         author: "Meet Makwana",
