@@ -32,9 +32,9 @@
   }
 
   .actions {
-    .stack-dropdown .Dropdown__menu--primary {
+    /* .stack-dropdown .Dropdown__menu--primary {
       left: -120px;
-    }
+    } */
 
     .share-document {
       display: flex;
