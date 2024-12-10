@@ -152,3 +152,101 @@ export const mappingData = {
     _in_progress: false,
   },
 };
+export const mappingData2 = {
+  notice: "Entry updated successfully.",
+  entry: {
+    title:
+      "Exploring the Impact of Content Management Systems in Modern Web Development",
+    url: "/exploring-the-impact-of-content-management-systems-in-modern-web-development",
+    date: "2024-11-28T00:00:00.000Z",
+    body: {
+      type: "doc",
+      uid: "posozitd2j",
+      children: [
+        {
+          type: "h1",
+          uid: "title_uid",
+          attrs: {},
+          children: [
+            {
+              text: "Exploring the Impact of Content Management Systems in Modern Web Development",
+              bold: true,
+            },
+          ],
+        },
+        {
+          type: "p",
+          uid: "body_intro_uid",
+          attrs: {},
+          children: [
+            {
+              text: "Content Management Systems (CMS) have revolutionized the way we create, manage, and distribute digital content. From small blogs to large-scale enterprise websites, CMS platforms provide the tools necessary to build dynamic web experiences without deep technical knowledge.",
+            },
+          ],
+        },
+        {
+          type: "p",
+          uid: "body_detail_uid",
+          attrs: {},
+          children: [
+            {
+              text: "In this article, we delve into the core functionalities of CMS, explore various popular platforms, and discuss how they can be leveraged to enhance web development processes and improve user engagement.",
+            },
+          ],
+        },
+      ],
+    },
+    featured_image: "https://example.com/featured-image.jpg",
+    related_post: [
+      {
+        uid: "related_post_1_uid",
+        title: "Understanding the Basics of CMS",
+        url: "https://example.com/related-post-1",
+      },
+      {
+        uid: "related_post_2_uid",
+        title: "Advanced Techniques in CMS Deployment",
+        url: "https://example.com/related-post-2",
+      },
+    ],
+    comments: {
+      comment:
+        "Leave a Reply: This article provides a comprehensive overview of CMS. Very informative!",
+      call_to_action: {
+        title: "Share this blog",
+        href: "https://example.com/blog-post",
+      },
+    },
+    social_share: {
+      social_media_share: [
+        {
+          platform: "Twitter",
+          url: "https://twitter.com/share?url=https://example.com/blog-post",
+        },
+        {
+          platform: "Facebook",
+          url: "https://facebook.com/share?url=https://example.com/blog-post",
+        },
+      ],
+    },
+    seo: {
+      meta_title:
+        "Exploring the Impact of Content Management Systems in Modern Web Development",
+      meta_description:
+        "Dive into the world of CMS and discover how these powerful tools shape the future of web development, making content management more accessible and efficient.",
+      keywords:
+        "CMS, web development, content management, digital content, user engagement",
+      enable_search_indexing: true,
+    },
+    tags: ["CMS", "web development", "content management"],
+    locale: "en-us",
+    uid: "blt7a22933f72fa9497",
+    created_by: "blte35796e59dc34eb7",
+    updated_by: "blt232e8da6a487d098",
+    created_at: "2024-11-28T00:00:00.000Z",
+    updated_at: "2024-11-28T00:00:00.000Z",
+    ACL: {},
+    _version: 1,
+    _in_progress: false,
+  },
+};

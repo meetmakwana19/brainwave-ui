@@ -9,10 +9,13 @@ import "./Editor.css";
 import { useLocation, useParams } from "react-router-dom";
 // import { sample } from "../../sample";
 import debounce from "lodash.debounce";
-import { putDocument } from "../../api/document";
+import { mapDocToEntry, putDocument } from "../../api/document";
 import { TableItem } from "../../common/types";
-import { checkIsContentEmpty, formatDate, isEmpty } from "../../common/utils/utils";
-import { mappingData } from "./data";
+import {
+  checkIsContentEmpty,
+  formatDate,
+  isEmpty,
+} from "../../common/utils/utils";
 import AIIcon from "../../common/components/AIIcon";
 
 interface IEditor {
@@ -64,12 +67,16 @@ const Editor: React.FC<IEditor> = (props) => {
     setDontShowToolBar(canRemove);
   }, [location]);
 
-  const sendDataToParent = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const sendDataToParent = (entryData: any) => {
+    console.log("entryData", entryData);
+
     // Send data to the parent via postMessage
     window.parent.postMessage(
       {
         type: "SET_DATA",
-        payload: mappingData.entry,
+        // payload: mappingData.entry,
+        payload: entryData,
       },
       "https://localhost:8081" // Parent origin
     );
@@ -106,13 +113,13 @@ const Editor: React.FC<IEditor> = (props) => {
         props.setDocTitle(response.title);
         if (props.setIsSyncing) {
           props.setIsSyncing(false);
-        }    
+        }
       })
       .catch((error) => {
         console.error("Error in updating document", error);
         if (props.setIsSyncing) {
           props.setIsSyncing(false);
-        }    
+        }
       });
   }, 2000); // Adjust debounce delay as neededx
 
@@ -129,12 +136,12 @@ const Editor: React.FC<IEditor> = (props) => {
   };
 
   const handleButtonClick = () => {
-    sendDataToParent();
-
     setMappingLoader(true); // Set mappingLoader to true
-    setTimeout(() => {
+    mapDocToEntry(editorContentRef.current).then((entryData) => {
+      console.log("Data sent to parent");
+      sendDataToParent(entryData);
       setMappingLoader(false); // Set it back to false after 5 seconds
-    }, 2500);
+    });
   };
 
   return (

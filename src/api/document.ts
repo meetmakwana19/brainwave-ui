@@ -103,3 +103,30 @@ export const fetchStacks = async (microAppsObj: IMicroAppsObj) => {
     throw error;
   }
 };
+
+
+export const mapDocToEntry = async (document: Document[]) => {
+  console.log("document in mapDocToEntry", document);
+  
+  const temp = {
+    rte_content: JSON.stringify(document),
+  }
+  console.log("payload in mapDocToEntry", temp);
+  
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/map-to-entry`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(temp),
+      }
+    );
+    return await handleFetchError(response);
+  } catch (error) {
+    console.error("Error mapping document to entry:", error);
+    throw error;
+  }
+}
