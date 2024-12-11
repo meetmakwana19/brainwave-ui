@@ -1,50 +1,26 @@
-# React + TypeScript + Vite
+# Brainwave UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Brainwave UI is a micro-frontend app built for Contentstack. It is a POC for an AI-powered content generator built into Contentstack, allowing you to create high-quality, on-brand content.
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Create `.npmrc` file with the github access token of your contentstack github account.
+- To install Brainwave UI dependencies :
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+npm install --legacy-peer-deps
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- Create `.env` file by referring to the `example.env` file.
+- Start development server :
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+```bash
+npm run dev
+```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+- To run in the micro-frontend mode, you need to build it first and then host it :
+
+```bash
+npm run build
+npm run preview
 ```
